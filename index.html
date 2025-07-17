@@ -170,16 +170,6 @@
 A curious learner, on a way to become a kickass developer who writes Python, TypeScript and Go<br/>
 Senior Software Engineer <a href="https://coinswitch.co/">@CoinSwitch</a> | Ex <a href="https://blinkit.com/">@Blinkit</a> | Tech Consultant | Freelancer | Open Source Developer
 </p>
-<div class="contact-info fade-in-up delay-2-5" style="margin: 1.5rem 0; font-family: 'Inter', sans-serif; color: var(--text-secondary);">
-  <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; font-size: 1.1em;">
-    <a href="mailto:keshavbathla2017@gmail.com" style="color: var(--accent-blue); text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
-      <i class="fas fa-envelope"></i> keshavbathla2017@gmail.com
-    </a>
-    <a href="tel:+919643906878" style="color: var(--accent-blue); text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
-      <i class="fas fa-phone"></i> +91 96439 06878
-    </a>
-  </div>
-</div>
 <div class="box fade-in-up delay-3">
 <a class="btn blue" href="static_files/Keshav's Resume.pdf">
 <span>Download Resume</span>
@@ -309,8 +299,23 @@ Senior Software Engineer <a href="https://coinswitch.co/">@CoinSwitch</a> | Ex <
 <div class="footer col-sm-12">
 <div class="container">
 <div class="row">
-<div class="col-md-12 text-center ">
-<ul class="list-inline social-links">
+<div class="col-md-12 text-center">
+<!-- Contact Information -->
+<div class="contact-section" style="margin-bottom: 0.8rem;">
+  <h3 style="color: var(--text-muted); font-family: 'Poppins', sans-serif; font-size: 1.3em; font-weight: 600; margin-bottom: 0.8rem;">Get In Touch</h3>
+  <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: nowrap; font-size: 1em; margin-bottom: 0.5rem;">
+    <a href="tel:+919643906878" style="color: var(--accent-blue); text-decoration: none; display: flex; align-items: center; gap: 0.4rem; transition: all 0.3s ease; white-space: nowrap;">
+      <i class="fas fa-phone" style="font-size: 1.1em;"></i>
+      <span>+91 96439 06878</span>
+    </a>
+    <a href="mailto:keshavbathla2017@gmail.com" style="color: var(--accent-blue); text-decoration: none; display: flex; align-items: center; gap: 0.4rem; transition: all 0.3s ease; white-space: nowrap;">
+      <i class="fas fa-envelope" style="font-size: 1.1em;"></i>
+      <span>keshavbathla2017@gmail.com</span>
+    </a>
+  </div>
+</div>
+
+<ul class="list-inline social-links" style="padding: 0; margin: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;">
 <li>
 <a href="https://github.com/import-keshav" class="btn-social btn-outline" data-toggle="tooltip" data-placement="top" title="Github">
 <i class="fab fa-github"></i>
@@ -343,5 +348,43 @@ Senior Software Engineer <a href="https://coinswitch.co/">@CoinSwitch</a> | Ex <
 <script src="static_files/bootstrap.js"></script>
 <script src="static_files/style.js"></script>
 <script src="static_files/portfolio.js"></script>
+
+<!-- Scroll-based Footer Visibility -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const footer = document.querySelector('.footer');
+    let isFooterVisible = false;
+    
+    function handleScroll() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const documentHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercentage = (scrollTop / documentHeight) * 100;
+        
+        // Show footer when user scrolls past 40% of the page
+        if (scrollPercentage > 40 && !isFooterVisible) {
+            footer.classList.add('visible');
+            isFooterVisible = true;
+        }
+        // Hide footer when user scrolls back up above 35% (with small buffer to prevent flickering)
+        else if (scrollPercentage <= 35 && isFooterVisible) {
+            footer.classList.remove('visible');
+            isFooterVisible = false;
+        }
+    }
+    
+    // Throttle scroll events for better performance
+    let throttleTimer;
+    window.addEventListener('scroll', function() {
+        if (throttleTimer) return;
+        throttleTimer = setTimeout(function() {
+            handleScroll();
+            throttleTimer = null;
+        }, 100);
+    });
+    
+    // Initial check
+    handleScroll();
+});
+</script>
 
 <div><div style="display: none; position: fixed; top: 30px; width: auto; max-width: 100%; text-align: center; left: 50%; transform: translateX(-50%); z-index: 99999999;"><div style="display: inline-block; font-size: 14px; font-weight: bold; border: 1px solid rgb(240, 195, 109); background-color: rgb(249, 237, 190); padding: 0px 10px; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;"></div></div></div></body><span class="gr__tooltip"><span class="gr__tooltip-content"></span><i class="gr__tooltip-logo"></i><span class="gr__triangle"></span></span></html>
