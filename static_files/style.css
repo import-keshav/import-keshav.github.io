@@ -628,3 +628,16 @@ svg{background-color:#000;width:100%;height:100%;vertical-align:top;background:0
     transform: translateY(0);
   }
 }
+
+/* Sticky Section Nav (reuses .tech-tag pills) */
+.section-nav {
+  position: sticky;
+  top: 1rem;
+  z-index: 500;
+  margin-top: 1.5rem;
+}
+
+.section-nav a.tech-tag {
+  text-decoration: none;
+  cursor: pointer;
+}

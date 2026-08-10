@@ -74,14 +74,13 @@ document.addEventListener('DOMContentLoaded', function() {
         requestAnimationFrame(animation);
     }
     
-    // Add smooth scrolling to experience section if link exists
-    const experienceLink = document.querySelector('a[href="#experience"]');
-    if (experienceLink) {
-        experienceLink.addEventListener('click', function(e) {
+    // Smooth scrolling for all in-page anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
-            smoothScroll('#experience');
+            smoothScroll(this.getAttribute('href'));
         });
-    }
+    });
     
     // Intersection Observer for Scroll Animations
     const observerOptions = {
