@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,9 +9,49 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <title>How Cursor Router picks the right model (explained simply) — Keshav Bathla</title>
-<meta name="description" content="A simple explanation of how Cursor Router works — Compass, model strengths, Auto Balance vs Auto Intelligence, and why smart routing beats always using the biggest model.">
+<meta name="description" content="How Cursor Router works: Compass complexity scoring, model strengths, Auto Balance vs Auto Intelligence, and why routing beats always picking the biggest model.">
 <meta name="author" content="Keshav Bathla">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="How Cursor Router picks the right model (explained simply)">
+<meta property="og:description" content="Compass complexity scoring, model strengths, Auto Balance vs Auto Intelligence — and why smart routing beats always using the biggest model.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://import-keshav.github.io/blogs/how-cursor-router-works.html">
+<meta property="og:image" content="https://import-keshav.github.io/static_files/blog/01-router-overview.png">
+<meta property="og:site_name" content="Keshav Bathla">
+<meta property="article:published_time" content="2026-08-08">
+<meta property="article:author" content="Keshav Bathla">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How Cursor Router picks the right model (explained simply)">
+<meta name="twitter:description" content="Compass, model strengths, Auto Balance vs Auto Intelligence — why smart routing beats always using the biggest model.">
+<meta name="twitter:image" content="https://import-keshav.github.io/static_files/blog/01-router-overview.png">
+<meta name="twitter:creator" content="@import_keshav">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238e24aa'/%3E%3Cstop offset='1' stop-color='%23ff6e40'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='45' font-family='Arial' font-weight='bold' font-size='36' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How Cursor Router picks the right model (explained simply)",
+  "description": "How Cursor Router works: Compass complexity scoring, model strengths, Auto Balance vs Auto Intelligence, and why routing beats always picking the biggest model.",
+  "image": "https://import-keshav.github.io/static_files/blog/01-router-overview.png",
+  "datePublished": "2026-08-08",
+  "dateModified": "2026-08-08",
+  "author": {
+    "@type": "Person",
+    "name": "Keshav Bathla",
+    "url": "https://import-keshav.github.io/"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Keshav Bathla",
+    "url": "https://import-keshav.github.io/"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://import-keshav.github.io/blogs/how-cursor-router-works.html"
+  },
+  "keywords": ["Cursor Router", "LLM routing", "AI coding agents", "model routing", "Compass"]
+}
+</script>
 </head>
 <body data-theme="light">
 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -59,7 +99,7 @@
     </ol>
 
     <figure class="blog-figure">
-      <img src="../static_files/blog/01-router-overview.png" alt="Cursor Router overview: message goes to Compass, then cheap or frontier model, then answer">
+      <img src="../static_files/blog/01-router-overview.png" alt="Cursor Router overview: message goes to Compass, then cheap or frontier model, then answer" loading="lazy" width="1200" height="675">
       <figcaption>Every chat turn goes through complexity check → then model pick.</figcaption>
     </figure>
 
@@ -99,7 +139,7 @@
     </p>
 
     <figure class="blog-figure">
-      <img src="../static_files/blog/02-compass-threshold.png" alt="Compass score from 0 to 1 with threshold tau deciding cheap vs frontier model">
+      <img src="../static_files/blog/02-compass-threshold.png" alt="Compass score from 0 to 1 with threshold tau deciding cheap vs frontier model" loading="lazy" width="1200" height="675">
       <figcaption>Compass score decides cheap path vs frontier path.</figcaption>
     </figure>
 
@@ -124,7 +164,7 @@
     </ul>
 
     <figure class="blog-figure">
-      <img src="../static_files/blog/03-model-strengths.png" alt="Cursor model strengths: Grok for routine work, Sol for planning, Opus for execution, and Fable for debugging and visual work">
+      <img src="../static_files/blog/03-model-strengths.png" alt="Cursor model strengths: Grok for routine work, Sol for planning, Opus for execution, and Fable for debugging and visual work" loading="lazy" width="1200" height="675">
       <figcaption>Match the job to the model’s sweet spot.</figcaption>
     </figure>
 
@@ -140,7 +180,7 @@
     </ol>
 
     <figure class="blog-figure">
-      <img src="../static_files/blog/04-routing-flow.png" alt="Full Cursor Router decision flow from Compass through uplift check and Auto Balance vs Auto Intelligence">
+      <img src="../static_files/blog/04-routing-flow.png" alt="Full Cursor Router decision flow from Compass through uplift check and Auto Balance vs Auto Intelligence" loading="lazy" width="1200" height="675">
       <figcaption>Compass first, then taxonomy + budget rules.</figcaption>
     </figure>
 
@@ -156,7 +196,7 @@
     </ul>
 
     <figure class="blog-figure">
-      <img src="../static_files/blog/05-cost-quality-dial.png" alt="Cost vs quality dial: Auto Balance in ideal zone, Auto Intelligence near top quality at lower cost than always using top model">
+      <img src="../static_files/blog/05-cost-quality-dial.png" alt="Cost vs quality dial: Auto Balance in ideal zone, Auto Intelligence near top quality at lower cost than always using top model" loading="lazy" width="1200" height="675">
       <figcaption>Router modes aim for high quality without always paying frontier prices.</figcaption>
     </figure>
 
@@ -197,6 +237,13 @@
       (Connor O’Keefe &amp; Yuri Volkov, Cursor Research).
       This post is my simplified notes for engineers — not an official Cursor document.
     </p>
+
+    <h2>Related reading</h2>
+    <ul>
+      <li><a href="chinese-ai-models-vs-us.html">Cheap intelligence, expensive trust</a> — when to use DeepSeek/GLM/Kimi vs Claude/OpenAI</li>
+      <li><a href="../index.html#ai-engineering">AI-native engineering</a> on my homepage — agents, RAG, MCP, and production stack</li>
+      <li><a href="../index.html#contact">Get in touch</a> if you’re building multi-model LLM products</li>
+    </ul>
   </div>
 </article>
 
