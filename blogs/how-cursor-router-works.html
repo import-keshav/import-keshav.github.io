@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="canonical" href="https://import-keshav.github.io/blogs/how-cursor-router-works.html">
+<link rel="stylesheet" href="../static_files/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>How Cursor Router picks the right model (explained simply) — Keshav Bathla</title>
+<meta name="description" content="A simple explanation of how Cursor Router works — Compass, model strengths, Auto Balance vs Auto Intelligence, and why smart routing beats always using the biggest model.">
+<meta name="author" content="Keshav Bathla">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238e24aa'/%3E%3Cstop offset='1' stop-color='%23ff6e40'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='45' font-family='Arial' font-weight='bold' font-size='36' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+  <div class="theme-toggle-slider">
+    <span class="theme-toggle-icon">🌙</span>
+  </div>
+</button>
+
+<article class="blog-page">
+  <a class="blog-back" href="index.html">← All blogs</a>
+  <h1>How Cursor Router picks the right model (explained simply)</h1>
+  <p class="blog-meta">16 August, 2026 · ~6 min read</p>
+
+  <div class="blog-body">
+    <p>
+      Cursor lets you use many AI models — some cheap and fast, some expensive and very smart.
+      The hard question is: <strong>which model should answer this message?</strong>
+    </p>
+    <p>
+      If you always pick the strongest model, quality is high but bills explode.
+      If you always pick the cheap one, simple work is fine but hard work breaks.
+    </p>
+    <p>
+      <strong>Cursor Router</strong> solves this. For every turn in the chat, it looks at what you asked,
+      how complex it looks, and which model has historically done that kind of work well —
+      then routes the request accordingly.
+    </p>
+    <p>
+      This post is a plain-English walkthrough of
+      <a href="https://cursor.com/blog/how-cursor-router-works" target="_blank" rel="noopener">Cursor’s research blog</a>
+      on how that system works.
+    </p>
+
+    <h2>The big idea</h2>
+    <p>
+      Don’t choose models from leaderboard scores alone. Choose from <strong>real developer traffic</strong> —
+      what people actually ask Cursor to do, and whether they seemed happy with the answer.
+    </p>
+    <p>
+      Routing then happens in two steps:
+    </p>
+    <ol>
+      <li><strong>Is this turn simple?</strong> If yes → use a cheap, efficient model.</li>
+      <li><strong>If it’s hard, which frontier model fits best?</strong> Match the task type to the model that wins on that type.</li>
+    </ol>
+
+    <figure class="blog-figure">
+      <!-- After you render Diagram 1, save as: ../static_files/blog/01-router-overview.png -->
+      <div class="blog-img-placeholder" id="diagram-01">Diagram 1 — Router overview (image pending)</div>
+      <figcaption>Every chat turn goes through complexity check → then model pick.</figcaption>
+    </figure>
+
+    <h2>How they know if a response was “good”</h2>
+    <p>
+      Cursor built a big dataset from live usage (with privacy settings respected).
+      For each turn they track two things:
+    </p>
+    <ul>
+      <li><strong>Performance signal</strong> — Did you move on to the next task? That’s a good sign.
+        Did you correct the agent? That’s a bad sign.</li>
+      <li><strong>Cost</strong> — Real API price + tokens used, including messy costs like cache misses when switching models.</li>
+    </ul>
+    <p>
+      So the router is trained on “what made developers happy in the real world,” not only on synthetic benchmarks.
+    </p>
+
+    <h2>Compass: the complexity detector</h2>
+    <p>
+      <strong>Compass</strong> is a model that scores each turn from <strong>0 to 1</strong> —
+      roughly, “how likely is the user to be satisfied with a cheap model’s answer?”
+    </p>
+    <p>
+      Simple work (make a commit, rename a variable) usually needs no correction → Compass says “easy.”
+      Hard work (big refactor, subtle bug) often needs follow-ups → Compass says “complex.”
+    </p>
+    <p>
+      Cursor sets a <strong>threshold</strong> on that score:
+    </p>
+    <ul>
+      <li>Below the line → stay on the cheap model (e.g. Grok for routine work).</li>
+      <li>Above the line → upgrade to a frontier model.</li>
+    </ul>
+    <p>
+      Raise the threshold → more traffic stays cheap (lower cost, a bit more risk on quality).
+      Lower it → upgrade more often (higher quality, higher cost).
+    </p>
+
+    <figure class="blog-figure">
+      <!-- After you render Diagram 2, save as: ../static_files/blog/02-compass-threshold.png -->
+      <div class="blog-img-placeholder" id="diagram-02">Diagram 2 — Compass score vs threshold (image pending)</div>
+      <figcaption>Compass score decides cheap path vs frontier path.</figcaption>
+    </figure>
+
+    <h2>Different models win at different jobs</h2>
+    <p>
+      When Compass says “this needs a strong model,” the next question is <em>which</em> one.
+      Cursor labels each turn with three kinds of tags learned from real work:
+    </p>
+    <ul>
+      <li><strong>Domain</strong> — where the work lives (backend, frontend, database…)</li>
+      <li><strong>Task</strong> — what you want (fix a bug, write tests, run commands…)</li>
+      <li><strong>Modifier</strong> — extra flavor (small bounded edit, visual-heavy UI, product question…)</li>
+    </ul>
+    <p>
+      No single model wins everything. Roughly from Cursor’s findings:
+    </p>
+    <ul>
+      <li><strong>Grok</strong> — great value for broad, routine work (git, simple DB ops).</li>
+      <li><strong>Sol</strong> — strong at planning and understanding a codebase.</li>
+      <li><strong>Opus</strong> — strong on execution-heavy work (devops, queries, performance).</li>
+      <li><strong>Fable</strong> — shines at debugging and visual / UI-heavy implementation.</li>
+    </ul>
+
+    <figure class="blog-figure">
+      <!-- After you render Diagram 3, save as: ../static_files/blog/03-model-strengths.png -->
+      <div class="blog-img-placeholder" id="diagram-03">Diagram 3 — Model strengths map (image pending)</div>
+      <figcaption>Match the job to the model’s sweet spot.</figcaption>
+    </figure>
+
+    <h2>The routing algorithm (simple version)</h2>
+    <ol>
+      <li>Compass scores the turn.</li>
+      <li>If score says “simple enough” → send to the price-efficient model.</li>
+      <li>If not → look at the task label and pick a frontier model <strong>only if</strong>
+        it’s clearly better than the cheap option (they use a ~75% confidence uplift bar —
+        don’t upgrade for tiny / doubtful gains).</li>
+      <li>Among eligible models, pick a mix that maximizes expected quality
+        <strong>within a cost budget</strong>.</li>
+    </ol>
+
+    <figure class="blog-figure">
+      <!-- After you render Diagram 4, save as: ../static_files/blog/04-routing-flow.png -->
+      <div class="blog-img-placeholder" id="diagram-04">Diagram 4 — Full routing decision flow (image pending)</div>
+      <figcaption>Compass first, then taxonomy + budget rules.</figcaption>
+    </figure>
+
+    <h2>Auto Balance vs Auto Intelligence</h2>
+    <p>
+      Same router, different knobs on the cost–quality dial:
+    </p>
+    <ul>
+      <li><strong>Auto Balance</strong> — keeps more turns on the cheap path; smaller budget for frontier models.
+        Aim: beat a strong baseline model on happiness, at much lower cost.</li>
+      <li><strong>Auto Intelligence</strong> — more room to call frontier models when the gain is worth it.
+        Aim: near top-tier satisfaction, still far cheaper than always using the top model.</li>
+    </ul>
+    <p>
+      Cursor reports (as of their Aug 2026 write-up) that Auto Intelligence can sit above
+      Fable-level satisfaction at ~68% lower cost, and Auto Balance can beat Opus 4.8 satisfaction
+      at ~41% lower cost — numbers that keep improving as they retrain on more traffic.
+    </p>
+
+    <h2>Why this matters (beyond Cursor)</h2>
+    <p>
+      If you’re building any AI product with multiple models, the same pattern shows up:
+    </p>
+    <ul>
+      <li>Classify <strong>complexity</strong> before you spend money.</li>
+      <li>Learn <strong>model strengths</strong> from your own users, not only from public benches.</li>
+      <li>Only upgrade when the uplift is <strong>statistically real</strong>.</li>
+      <li>Put an explicit <strong>budget</strong> on the “smart path.”</li>
+      <li>Keep re-evaluating online — offline sims miss cache, switching cost, and real behavior.</li>
+    </ul>
+    <p>
+      That’s the mental model of a production LLM router: not “pick the best model,”
+      but “pick the best <em>model for this turn under this budget</em>.”
+    </p>
+
+    <h2>TL;DR</h2>
+    <p>
+      Cursor Router is a smart traffic cop for AI models.
+      Compass decides if the request is easy or hard.
+      If hard, a task taxonomy picks the frontier model that historically wins on that job —
+      but only when the upgrade is clearly worth the cost.
+      Auto Balance and Auto Intelligence are two settings on that same system.
+    </p>
+
+    <p class="blog-source">
+      Source &amp; deeper detail:
+      <a href="https://cursor.com/blog/how-cursor-router-works" target="_blank" rel="noopener">How Cursor Router chooses the right model for the task</a>
+      (Connor O’Keefe &amp; Yuri Volkov, Cursor Research).
+      This post is my simplified notes for engineers — not an official Cursor document.
+    </p>
+  </div>
+</article>
+
+<script src="../static_files/portfolio.js"></script>
+</body>
+</html>
