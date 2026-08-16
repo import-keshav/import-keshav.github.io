@@ -6,8 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const themeIcon = document.querySelector('.theme-toggle-icon');
     const body = document.body;
     
-    // Check for saved theme preference or default to 'dark'
-    const currentTheme = localStorage.getItem('theme') || 'dark';
+    // Blogs default to light (readable reading view); home stays dark by default
+    const isBlogPage = /\/blogs(\/|$)/.test(location.pathname);
+    const themeKey = isBlogPage ? 'blog-theme' : 'theme';
+    const currentTheme = localStorage.getItem(themeKey) || (isBlogPage ? 'light' : 'dark');
     body.setAttribute('data-theme', currentTheme);
     
     // Update toggle icon based on current theme
@@ -24,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         
         body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
+        localStorage.setItem(themeKey, newTheme);
         updateThemeIcon(newTheme);
         
         // Add a subtle pulse animation to the toggle
