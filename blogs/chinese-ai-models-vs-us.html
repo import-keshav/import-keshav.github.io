@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<title>DeepSeek, GLM &amp; Kimi: How Chinese AI Models Are Catching Up to Claude and OpenAI — Keshav Bathla</title>
-<meta name="description" content="A simple look at how DeepSeek, Zhipu GLM, and Moonshot Kimi are competing with Claude and OpenAI on cost, speed, coding, and long context — and why that race helps end users.">
+<title>Cheap Intelligence, Expensive Trust: DeepSeek, GLM &amp; Kimi vs Claude and OpenAI — Keshav Bathla</title>
+<meta name="description" content="Chinese open models match near-frontier IQ at a fraction of US API cost. Claude and GPT still win agents, trust, and defaults—and why that split matters.">
 <meta name="author" content="Keshav Bathla">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238e24aa'/%3E%3Cstop offset='1' stop-color='%23ff6e40'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='45' font-family='Arial' font-weight='bold' font-size='36' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
 </head>
@@ -22,255 +22,373 @@
 
 <article class="blog-page">
   <a class="blog-back" href="index.html">← All blogs</a>
-  <h1>DeepSeek, GLM &amp; Kimi: How Chinese AI Models Are Catching Up to Claude and OpenAI</h1>
-  <p class="blog-meta">22 August, 2026 · ~9 min read</p>
+  <h1>Cheap Intelligence, Expensive Trust: DeepSeek, GLM &amp; Kimi vs Claude and OpenAI</h1>
+  <p class="blog-meta">22 August, 2026 · ~12 min read</p>
 
   <div class="blog-body">
     <p>
-      At the start of 2025, “frontier AI” mostly meant two American labs:
-      <a href="https://openai.com" target="_blank" rel="noopener">OpenAI</a> and
-      <a href="https://www.anthropic.com" target="_blank" rel="noopener">Anthropic</a>.
-      ChatGPT was where the mainstream went. Claude was becoming the favourite
-      for serious coding and long agent workflows.
+      For most of 2024, “frontier AI” was a short list. If you wanted the best reasoning,
+      coding, or agent behavior, you paid
+      <a href="https://openai.com" target="_blank" rel="noopener">OpenAI</a> or
+      <a href="https://www.anthropic.com" target="_blank" rel="noopener">Anthropic</a>—and you
+      accepted closed weights, premium prices, and a product surface that felt like the only
+      adult option in the room.
     </p>
     <p>
-      OpenAI shipped reasoning models such as o1 and o3, then brought reasoning,
-      coding and tool use together in the GPT-5 era. Anthropic moved from
-      Claude 3.7 to Claude 4 and made Claude Code a practical terminal agent.
-      For companies, these products felt like the safe frontier: polished apps,
-      familiar APIs, strong developer tools and enterprise trust.
-    </p>
-    <p>
-      By <strong>August 2026</strong>, the picture looked different.
-      Chinese labs — DeepSeek, Zhipu AI (GLM), and Moonshot AI (Kimi) —
-      were no longer just making cheaper alternatives. They were getting close
-      to the top models on public evaluations while costing much less to use.
-      The interesting story is not only <em>that</em> they caught up. It is
-      <em>how quickly</em> they did it.
-    </p>
-
-    <h2>2025: the year OpenAI and Claude set the pace</h2>
-    <p>
-      The US labs established the product categories everyone else had to chase:
-    </p>
-    <ul>
-      <li><strong>Reasoning</strong> — OpenAI’s o-series made “let the model think longer” a mainstream feature.</li>
-      <li><strong>Coding</strong> — GPT-4.1, Claude 3.7 and Claude 4 made repo-level software work much more useful.</li>
-      <li><strong>Agents</strong> — tool use and Claude Code showed that a model could do work, not only answer questions.</li>
-      <li><strong>Distribution</strong> — ChatGPT, Claude, IDE integrations and enterprise contracts put US models in front of millions of users.</li>
-    </ul>
-    <p>
-      The lead was not just about benchmark scores. It was model quality plus
-      product, distribution and trust. That is a much harder lead to attack.
-    </p>
-
-    <h2>The turning point: strong models became cheap and open</h2>
-    <p>
-      The shift actually started at the end of 2024. DeepSeek-V3 used a
-      <strong>Mixture-of-Experts (MoE)</strong> design: the model had 671 billion
-      total parameters, but activated only about 37 billion for each token.
-      Instead of using the whole brain for every word, it called only the
-      specialist parts needed for that moment.
-    </p>
-    <p>
-      Then <a href="https://www.deepseek.com/en/news/deepseek-r1/" target="_blank" rel="noopener">DeepSeek-R1</a>
-      arrived in January 2025 with reinforcement-learning-based reasoning,
-      downloadable weights, and aggressive API pricing. Suddenly “open and cheap”
-      did not have to mean “far behind.”
-    </p>
-    <p>
-      By July 2025,
-      <a href="https://www.kimi.com/blog/kimi-k2" target="_blank" rel="noopener">Kimi K2</a>
-      and <a href="https://z.ai/blog/glm-4.5" target="_blank" rel="noopener">GLM-4.5</a>
-      applied the same broad playbook to coding and agents. Through 2026,
-      these families kept iterating on multimodality, longer context and
-      agentic tool use.
-    </p>
-
-    <h2>How did they catch up so quickly?</h2>
-    <p>
-      There was no single magic trick. The public papers and releases point to
-      a stack of engineering choices:
-    </p>
-    <ul>
-      <li><strong>Sparse MoE architectures</strong> — huge total capacity, but only a small part runs for each token. This lowers inference cost.</li>
-      <li><strong>More efficient attention and training</strong> — techniques such as latent or sparse attention, FP8 training and better communication between GPUs reduced wasted compute.</li>
-      <li><strong>Reinforcement learning and distillation</strong> — strong reasoning behaviour was learned, then transferred into smaller or more practical models.</li>
-      <li><strong>Open weights</strong> — developers could download, fine-tune and deploy models, creating adoption much faster than a closed waitlist.</li>
-      <li><strong>Aggressive API pricing</strong> — low prices gave startups and agent builders a reason to test these models in production.</li>
-      <li><strong>Fast iteration</strong> — DeepSeek V3 → R1, Kimi K2 → K2.5, and GLM’s open releases compressed years of catch-up into months.</li>
-    </ul>
-    <p>
-      Industry observers also argue that limited access to the newest US chips
-      pushed Chinese labs toward efficiency. That is a reasonable interpretation,
-      not something one benchmark can prove. What the technical reports do prove
-      is that these teams became extremely good at getting more from each unit
-      of compute.
-    </p>
-
-    <h2>2026: catch-up became competition</h2>
-    <p>
-      In 2025, the surprise was that Chinese open models could get close.
-      In 2026, the surprise was the pace: larger context windows, better coding
-      agents, multimodal inputs and new price cuts arrived within months of each
-      other. The conversation moved from “can they match a US model?” to
-      “which model gives me the best result for this workload and budget?”
-    </p>
-    <p>
-      That distinction matters. A startup running millions of agent turns may
-      prefer a model that is 95% as good for one-fifth the cost. A company with
-      sensitive data may prefer open weights it can host itself. A developer
-      working across a huge repository may care more about context length than
-      one extra benchmark point.
-    </p>
-
-    <h2>DeepSeek (DeepSeek / 深度求索)</h2>
-    <p>
-      Site: <a href="https://www.deepseek.com" target="_blank" rel="noopener">deepseek.com</a>
-      · API docs: <a href="https://api-docs.deepseek.com" target="_blank" rel="noopener">api-docs.deepseek.com</a>
-    </p>
-    <p>
-      DeepSeek became famous for a simple idea:
-      strong reasoning and coding quality at a price that feels almost unfair.
-      Models like <strong>DeepSeek-V3</strong> and the reasoning-focused <strong>DeepSeek-R1</strong>
-      helped set the “open / cheap frontier” narrative.
-      Newer API models (V4-class Flash / Pro) keep pushing long context and thinking modes.
-    </p>
-    <p>What stands out:</p>
-    <ul>
-      <li><strong>Low cost</strong> — API rates that undercut typical Claude / GPT frontier pricing by a wide margin.</li>
-      <li><strong>Fast enough for real work</strong> — especially Flash-style SKUs for everyday coding and chat.</li>
-      <li><strong>Strong reasoning / coding value</strong> — good at math and software tasks relative to what you pay.</li>
-      <li><strong>Developer-friendly APIs</strong> — easy to plug into tools that already speak OpenAI-style endpoints.</li>
-    </ul>
-
-    <h2>GLM (Zhipu AI / 智谱 · Z.ai)</h2>
-    <p>
-      Company: <strong>Zhipu AI</strong>
-      · Product / research: <a href="https://z.ai" target="_blank" rel="noopener">z.ai</a>
-      · GLM-5 announcement: <a href="https://z.ai/blog/glm-5" target="_blank" rel="noopener">z.ai/blog/glm-5</a>
-    </p>
-    <p>
-      GLM is Zhipu’s model family. With <strong>GLM-5</strong> (and the earlier GLM-4.5 / 4.7 line),
-      they positioned open-weight models as serious options for
-      coding agents, long-horizon tasks, and document-heavy workflows —
-      not just demos.
-    </p>
-    <p>What stands out:</p>
-    <ul>
-      <li><strong>Open weights mindset</strong> — more room to self-host, fine-tune, and audit.</li>
-      <li><strong>Agentic coding story</strong> — aimed at long coding sessions, not only one-shot answers.</li>
-      <li><strong>Practical deliverables</strong> — office / document style agent outputs in their product narrative.</li>
-      <li><strong>Cost + deploy flexibility</strong> — useful when you care about infra choice, not only a hosted chat box.</li>
-    </ul>
-
-    <h2>Kimi (Moonshot AI / 月之暗面)</h2>
-    <p>
-      Company: <strong>Moonshot AI</strong>
-      · Chat: <a href="https://www.kimi.com" target="_blank" rel="noopener">kimi.com</a>
-      · API: <a href="https://platform.kimi.ai" target="_blank" rel="noopener">platform.kimi.ai</a>
-    </p>
-    <p>
-      Kimi’s brand is “bring the whole context.”
-      From <strong>Kimi K2</strong> into <strong>K2.5</strong> (multimodal / agentic) and later
-      <strong>K3</strong>-class flagships with very large context windows,
-      Moonshot leaned into long documents, big codebases, and agent workflows.
-    </p>
-    <p>What stands out:</p>
-    <ul>
-      <li><strong>Huge context</strong> — strong for whole-repo and long-doc jobs where smaller windows choke.</li>
-      <li><strong>Agentic + multimodal</strong> — tools, vision, and multi-step work in one product story.</li>
-      <li><strong>Coding-focused SKUs</strong> — dedicated “code” variants for software engineering loops.</li>
-      <li><strong>Choice of tiers</strong> — cheaper K2.x options for volume, premium flagship when you need max quality.</li>
-    </ul>
-
-    <h2>The gap is now smaller than the price gap</h2>
-    <p>
-      These Artificial Analysis screenshots are a useful point-in-time snapshot.
-      Their Intelligence Index combines several evaluations; it is not a universal
-      measure of which model is “best.”
-    </p>
-
-    <figure class="blog-figure">
-      <img src="../static_files/blog/chinese-models-intelligence-index.png" alt="Artificial Analysis Intelligence Index showing Kimi near Claude and GPT, with DeepSeek and GLM also competitive">
-      <figcaption>Artificial Analysis Intelligence Index — a composite benchmark snapshot supplied on 16 August 2026.</figcaption>
-    </figure>
-
-    <p>
-      The US models still lead this chart: Claude sits at the top and GPT is close.
-      But Kimi is only a few points behind, while DeepSeek and GLM remain in the
-      competitive group. That would already be notable. The cost chart makes it
-      much more important.
-    </p>
-
-    <figure class="blog-figure">
-      <img src="../static_files/blog/chinese-models-cost-per-task.png" alt="Artificial Analysis cost per Intelligence Index task showing DeepSeek and GLM much cheaper than Claude and GPT">
-      <figcaption>Cost per Intelligence Index task — lower is better; screenshot values are a point-in-time estimate.</figcaption>
-    </figure>
-
-    <p>
-      In this snapshot, DeepSeek V4 Pro costs about <strong>$0.25 per task</strong>
-      and GLM-5 about <strong>$0.32</strong>. GPT is around <strong>$1.23</strong>,
-      while the Claude entries are roughly <strong>$2.34–$3.14</strong>.
-      The honest conclusion is not “Chinese models beat everything.”
-      It is: <strong>the price of near-frontier intelligence has collapsed.</strong>
-    </p>
-
-    <h2>How the competition actually feels</h2>
-    <p>
-      Put simply:
-    </p>
-    <ul>
-      <li><strong>DeepSeek</strong> — “why am I paying 10× for this task?”</li>
-      <li><strong>GLM</strong> — “can I own / host a near-frontier model?”</li>
-      <li><strong>Kimi</strong> — “can I stuff the whole problem into context and still move fast?”</li>
-      <li><strong>Claude / GPT</strong> — still the default when you want maximum polish, trust, and product ecosystem.</li>
-    </ul>
-    <p>
-      Nobody “won AI.” What changed is that builders now have a real menu —
-      not a two-company monopoly of taste.
-    </p>
-
-    <h2>Why this race is good for end users</h2>
-    <p>
-      Geopolitics makes the headlines. Users feel something more practical:
-    </p>
-    <ul>
-      <li><strong>Lower prices</strong> — pressure from cheap Chinese APIs forces everyone to ship better value tiers.</li>
-      <li><strong>Faster shipping</strong> — more labs shipping means more experiments, more model drops, less waiting.</li>
-      <li><strong>Open options</strong> — open weights mean privacy, custom fine-tunes, and self-hosting when you need them.</li>
-      <li><strong>Real choice</strong> — pick cheap reasoning today, long-context tomorrow, Claude when the task is delicate.</li>
-    </ul>
-    <p>
-      Healthy competition is not noise. It is why frontier intelligence is spreading beyond a small club —
-      into tools, startups, and everyday developer workflows.
-    </p>
-
-    <h2>TL;DR</h2>
-    <p>
-      In August 2026, Chinese models from
+      Eighteen months later, that monopoly of <em>taste</em> is gone. What remains is a sharper
+      split: Chinese labs—
       <a href="https://www.deepseek.com" target="_blank" rel="noopener">DeepSeek</a>,
-      <a href="https://z.ai" target="_blank" rel="noopener">Zhipu (GLM)</a>, and
-      <a href="https://www.kimi.com" target="_blank" rel="noopener">Moonshot (Kimi)</a>
-      are competing hard with
-      <a href="https://openai.com" target="_blank" rel="noopener">OpenAI</a> and
-      <a href="https://www.anthropic.com" target="_blank" rel="noopener">Anthropic Claude</a> —
-      especially on cost, open weights, coding agents, and long context.
-      US models still set a high bar. The win for the rest of us is simple:
-      better models, more choice, and lower bills.
+      Zhipu /
+      <a href="https://z.ai" target="_blank" rel="noopener">Z.ai</a> (GLM), and Moonshot /
+      <a href="https://www.kimi.com" target="_blank" rel="noopener">Kimi</a>—have made
+      near-frontier intelligence cheap, open, and fast to iterate. US labs still usually win
+      the <em>absolute</em> tip of public intelligence indexes, and they still dominate agentic
+      productization, enterprise procurement, and regulatory comfort.
+    </p>
+    <p>
+      The story is no longer “China is catching up on IQ tests.” Catching up implies one finish
+      line. What we actually have is a bifurcation: <strong>commoditized cognition</strong> on
+      one side, <strong>trusted agency</strong> on the other. Buyers are already routing between them.
     </p>
 
-    <p class="blog-source">
-      Notes based on public docs and company pages
-      (<a href="https://www.deepseek.com/en/news/deepseek-v3/" target="_blank" rel="noopener">DeepSeek-V3</a>,
-      <a href="https://www.deepseek.com/en/news/deepseek-r1/" target="_blank" rel="noopener">DeepSeek-R1</a>,
+    <h2>Why this matters now</h2>
+    <p>By mid-2026, three things collided.</p>
+    <p>
+      First, <strong>open (or near-open) weights became China’s default competitive weapon</strong>—DeepSeek
+      and GLM under MIT-style terms; Kimi K2 under Modified MIT; K3 under a Kimi K3 License.
+      That is not a cultural flourish. It is a go-to-market: download, fine-tune, self-host,
+      put an agent behind your firewall.
+    </p>
+    <p>
+      Second, <strong>price stopped being a temporary promo and became strategy</strong>—then showed
+      signs of discipline. DeepSeek’s API pricing (including peak/off-peak structure around
+      16 August 2026) still undercuts typical Claude/GPT frontier rates by a wide margin.
+      Cost-per-task on composite evaluations is where the gap feels visceral, not academic.
+    </p>
+    <p>
+      Third, <strong>reasoning and agents became the product</strong>, not chat demos. Claude Code,
+      ChatGPT’s tool surface, and Chinese coding/agent SKUs all point to the same buyer question:
+      which model do I default to when intelligence is abundant and the bottleneck is reliability,
+      context, or bill size?
+    </p>
+    <p>
+      Capital noticed. DeepSeek’s reported valuation around <strong>$52B</strong> mid-2026
+      (Caixin reporting; treat as a secondary market signal, not audited fundamentals) and Z.ai’s
+      <strong>Hong Kong IPO in January 2026</strong> put Chinese model labs into the same conversation
+      as Western closed labs—while US Entity List pressure (Zhipu, January 2025) and regulatory
+      overhang around DeepSeek remind everyone that geopolitics is part of the stack.
+    </p>
+
+    <h2>The old assumption: US labs were far ahead</h2>
+    <p>
+      The old mental model was linear: US labs invent the frontier; everyone else trails by a
+      generation; open models are for hobbyists; price follows prestige.
+    </p>
+    <p>That assumption mixed three different races into one slogan:</p>
+    <ol>
+      <li><strong>Benchmark intelligence</strong> — can the model solve hard tasks?</li>
+      <li><strong>Productized agency</strong> — can it run tools, IDEs, and workflows without babysitting?</li>
+      <li><strong>Enterprise trust</strong> — procurement, SLAs, safety posture, legal comfort</li>
+    </ol>
+    <p>
+      Through early 2025, OpenAI and Anthropic really did lead on (2) and (3), and usually on (1)
+      as well. OpenAI’s o-series made “think longer” mainstream;
+      <a href="https://openai.com/index/introducing-gpt-5/" target="_blank" rel="noopener">GPT-5</a>
+      (7 August 2025) folded reasoning, coding, and tools into one product era. Anthropic’s
+      <a href="https://www.anthropic.com/news/claude-4" target="_blank" rel="noopener">Claude 4</a>
+      (22 May 2025) and Claude Code turned “coding model” into something you could run as a
+      terminal agent.
+    </p>
+    <p>
+      The lead was real. It was also <strong>not a single number</strong>—which is why treating any
+      one chart as a permanent ranking is a category error.
+    </p>
+
+    <h2>What changed with DeepSeek, GLM, and Kimi</h2>
+    <p>
+      From late 2024 through mid-2026, Chinese labs repeatedly shipped frontier-class
+      <strong>Mixture-of-Experts (MoE)</strong> models that matched or approached US closed models
+      on many public benchmarks at a fraction of API cost:
+    </p>
+    <ul>
+      <li><strong>DeepSeek</strong> — V3 (Dec 2024) → R1 (Jan 2025) → V4 Flash/Pro (Aug 2026)</li>
+      <li><strong>Zhipu GLM</strong> — GLM-4.5 (Jul 2025) → GLM-5.x (2026)</li>
+      <li><strong>Moonshot Kimi</strong> — K2 (Jul 2025) → K3 (Jul 2026)</li>
+    </ul>
+    <p>
+      This was not one China, one strategy. DeepSeek leaned into extreme price/performance and MoE
+      efficiency. Zhipu leaned into open weights, agentic tooling, and a capital-markets path—while
+      carrying Entity List friction. Moonshot leaned into long context, coding agents, and multimodal
+      flagships.
+    </p>
+    <p>
+      And the multiplayer field is wider than these three: Alibaba’s Qwen and MiniMax matter in the
+      same ecosystem. Treating “Chinese AI” as a monolith is how analysts miss the actual competition.
+    </p>
+    <p>
+      Kill the other cliché while we’re here: DeepSeek-V3’s paper reports a
+      <strong>final training run</strong> cost of about <strong>$5.576M</strong> at an assumed
+      <strong>$2/H800-hour</strong>
+      (<a href="https://arxiv.org/abs/2412.19437" target="_blank" rel="noopener">arXiv:2412.19437</a>).
+      That figure <strong>excludes prior R&amp;D, ablations, failed runs, and data work</strong>.
+      The viral “$6M frontier model” myth collapses a research accounting note into a fairy tale
+      about free lunches.
+    </p>
+
+    <h2>DeepSeek analysis</h2>
+    <p>
+      <a href="https://www.deepseek.com" target="_blank" rel="noopener">DeepSeek</a> made the
+      efficiency argument impossible to ignore.
+    </p>
+    <p>
+      <strong>DeepSeek-V3</strong> (December 2024) was a MoE design: roughly
+      <strong>671B total parameters</strong>, about <strong>37B active</strong> per token.
+      Sparse activation is the engineering joke that became a business model—huge capacity,
+      selective spend at inference.
+      <strong>DeepSeek-R1</strong> (January 2025) pushed reinforcement-learning-style reasoning
+      into open weights
+      (<a href="https://github.com/deepseek-ai/DeepSeek-R1" target="_blank" rel="noopener">GitHub: DeepSeek-R1</a>).
+      By August 2026, <strong>V4 Flash / Pro</strong> pushed long context (reported
+      <strong>1M</strong> context class) and thinking modes into API SKUs.
+    </p>
+    <p>
+      <strong>Pricing as product.</strong> As of mid-August 2026, DeepSeek’s public docs showed
+      Flash around <strong>$0.14 / $0.28</strong> and Pro around <strong>$0.435 / $0.87</strong>
+      (input/output per million tokens; check
+      <a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener">DeepSeek pricing</a>—rates
+      move). Peak rates rose after ~16 August 2026; that matters because
+      <strong>list price ≠ cost-per-task</strong>, and peak/off-peak discipline is how ultra-cheap
+      APIs stop being a race to the bottom.
+    </p>
+    <p>
+      <strong>Strengths (analysis):</strong> intelligence-per-dollar; developer-friendly
+      OpenAI-compatible endpoints; fast iteration that keeps pressure on everyone else’s “value tier.”
+    </p>
+    <p>
+      <strong>Limits (analysis):</strong> Artificial Analysis’s composite Intelligence Index still
+      usually puts tip Claude/GPT variants ahead on <em>absolute</em> score; regulatory and
+      procurement overhang is real for many Western buyers; open weights are not free to run when
+      checkpoints are multi-terabyte.
+    </p>
+    <p>
+      DeepSeek’s strategic message is blunt: if your workload is high-volume cognition, paying a
+      trust premium on every token is a choice—not a law of nature.
+    </p>
+
+    <h2>GLM / Zhipu AI analysis</h2>
+    <p>
+      <a href="https://z.ai" target="_blank" rel="noopener">Z.ai</a> / Zhipu’s GLM line is the
+      open-deployment thesis with an agentic accent.
+    </p>
+    <p>
+      <strong>GLM-4.5</strong> (July 2025)—roughly <strong>355B / 32B active</strong>,
+      MIT-licensed—framed open weights as serious infrastructure for coding agents and long-horizon
+      tasks
+      (<a href="https://z.ai/blog/glm-4.5" target="_blank" rel="noopener">z.ai/blog/glm-4.5</a>).
+      <strong>GLM-5.x</strong> in 2026 continued that arc. Zhipu’s
+      <strong>HK IPO (January 2026)</strong> put a Chinese foundation-model company on a public
+      market path; the <strong>US Entity List (January 2025)</strong> put a hard geopolitical
+      asterisk on the same timeline.
+    </p>
+    <p>
+      <strong>Strengths (analysis):</strong> self-host and fine-tune story; agentic tooling
+      narrative; Huawei Ascend / domestic-stack optionality (partly narrative, partly real
+      supply-chain adaptation—treat hardware claims as contested unless independently audited).
+    </p>
+    <p>
+      <strong>Limits (analysis):</strong> Entity List friction changes who can buy, partner, or
+      ship into certain jurisdictions; enterprise SLAs, safety evals, and Western legal comfort
+      still lag the closed US defaults for many CIOs.
+    </p>
+    <p>
+      GLM’s bet is that <strong>owning the weights</strong> matters as much as renting the smartest
+      chat box—especially for companies that treat models like infrastructure, not SaaS fashion.
+    </p>
+
+    <h2>Kimi / Moonshot AI analysis</h2>
+    <p>
+      <a href="https://www.kimi.com" target="_blank" rel="noopener">Kimi</a> / Moonshot sells a
+      different scarce resource: <strong>context and coding loop quality</strong>.
+    </p>
+    <p>
+      <strong>Kimi K2</strong> (July 2025)—about <strong>1T / 32B active</strong>, Modified
+      MIT—leaned hard into coding agents
+      (<a href="https://github.com/MoonshotAI/Kimi-K2" target="_blank" rel="noopener">GitHub: Kimi-K2</a>).
+      <strong>Kimi K3</strong> (July 2026)—reported ~<strong>2.8T</strong> class,
+      <strong>1M</strong> context, multimodal—pushed the “bring the whole problem” brand further,
+      under a Kimi K3 License (near-open, not identical to MIT).
+    </p>
+    <p>
+      <strong>Strengths (analysis):</strong> long documents and large repos where smaller windows
+      choke; coding-focused SKUs; multimodal + agent product story that feels closer to “work surface”
+      than “leaderboard model.”
+    </p>
+    <p>
+      <strong>Limits (analysis):</strong> license complexity for K3 vs fully permissive MIT;
+      absolute Intelligence Index tip still contested against Claude/GPT; long-context marketing
+      always needs a caveat—window size is not the same as reliable retrieval or agent reliability
+      across that window.
+    </p>
+    <p>
+      If DeepSeek is “why am I paying 10×?”, Kimi is “can I stuff the whole codebase in and still move?”
+    </p>
+
+    <h2>Comparison with Claude and OpenAI</h2>
+    <p>
+      Here is the honest scoreboard as of ~mid-August 2026—<strong>not</strong> a permanent ranking.
+    </p>
+
+    <figure class="blog-figure">
+      <img src="../static_files/blog/chinese-models-intelligence-index.png" alt="Artificial Analysis Intelligence Index comparing Claude, GPT, Kimi, DeepSeek, and GLM models">
+      <figcaption>
+        Artificial Analysis Intelligence Index — point-in-time snapshot ~16 August 2026.
+        Composite of multiple evals; not a universal “best model” ranking. Model names and scores churn.
+      </figcaption>
+    </figure>
+
+    <p>
+      On this snapshot, top Claude and GPT variants still sit at the tip. Kimi is close enough that
+      the gap is operationally interesting; DeepSeek and GLM sit in the competitive pack. That is
+      already a different world from “open models are toys.”
+    </p>
+
+    <figure class="blog-figure">
+      <img src="../static_files/blog/chinese-models-cost-per-task.png" alt="Cost per Artificial Analysis Intelligence Index task for DeepSeek, GLM, GPT, and Claude">
+      <figcaption>
+        Cost per Intelligence Index task (lower is better) — point-in-time snapshot ~16 August 2026.
+        Cost methodology is Artificial Analysis’s; your production mix will differ.
+      </figcaption>
+    </figure>
+
+    <p>
+      In this same snapshot, DeepSeek V4 Pro lands around <strong>~$0.25 per task</strong>,
+      GLM-5 around <strong>~$0.32</strong>, GPT around <strong>~$1.23</strong>, and Claude entries
+      roughly <strong>~$2.34–$3.14</strong>. Read those as AA’s cost model for its Index tasks—not
+      your invoice. The directional claim survives nitpicking:
+      <strong>near-frontier intelligence got cheap</strong>.
+    </p>
+    <ul>
+      <li><strong>Absolute AA tip</strong> — Chinese labs often close; US labs usually lead</li>
+      <li><strong>Cost / task</strong> — Chinese labs dominate; US labs price a premium</li>
+      <li><strong>Open / self-host</strong> — China’s core weapon; rare as a US product</li>
+      <li><strong>Agentic product surface</strong> — Chinese labs strong and improving; Claude Code and ChatGPT still the defaults</li>
+      <li><strong>Enterprise trust</strong> — uneven for Chinese vendors (geopolitics bites); still the safe choice for many US buyers</li>
+    </ul>
+    <p>
+      They are not competing for the same customer moment. US labs sell
+      <strong>trust + agency at a premium</strong>. Chinese labs sell
+      <strong>commoditized intelligence + open deployment</strong>. Sophisticated buyers route:
+      cheap reasoning for volume, Claude when the task is delicate, open weights when data
+      residency or customization matters.
+    </p>
+
+    <h2>China’s strategic advantages</h2>
+    <p>Four advantages show up repeatedly—and they are structural, not vibes.</p>
+    <ol>
+      <li>
+        <strong>Open weights as distribution.</strong> MIT-style releases turn GitHub into a sales
+        funnel. Adoption compounds without a waitlist.
+      </li>
+      <li>
+        <strong>MoE and systems efficiency under chip constraints.</strong> Limited access to the
+        newest US accelerators (a contested but widely discussed constraint) pushed teams toward
+        sparse activation, better training numerics, and ruthless inference economics. Efficiency
+        became culture.
+      </li>
+      <li>
+        <strong>Price as market entry, then discipline.</strong> Ultra-low API rates forced Western
+        value tiers; peak/off-peak hikes show that “free forever” was never the plan.
+      </li>
+      <li>
+        <strong>Domestic multiplayer pressure.</strong> DeepSeek, Zhipu, Moonshot, Qwen,
+        MiniMax—competition inside China is a treadmill. Nobody can rest on one release.
+      </li>
+    </ol>
+    <p>
+      Capital markets amplify this: high private valuations and IPO paths fund the next training
+      cycle even when export controls complicate the GPU story.
+    </p>
+
+    <h2>Remaining gaps and limitations</h2>
+    <p>
+      None of this means “China already won,” and none of it means “the US is years ahead on
+      everything.” Both slogans are lazy.
+    </p>
+    <p><strong>Gaps that still favor US closed labs (analysis):</strong></p>
+    <ul>
+      <li><strong>Agentic reliability in productized form</strong> — Claude Code and ChatGPT’s tool ecosystems remain sticky defaults for many developers.</li>
+      <li><strong>Enterprise SLAs, safety processes, and legal comfort</strong> — especially for regulated industries and Western government-adjacent work.</li>
+      <li><strong>Consumer and workplace lock-in</strong> — distribution is a moat that benchmarks do not measure.</li>
+      <li><strong>Absolute tip of some composite indexes</strong> — including AA’s Intelligence Index in the mid-August 2026 snapshot.</li>
+    </ul>
+    <p><strong>Gaps and frictions on the Chinese side:</strong></p>
+    <ul>
+      <li><strong>Geopolitics:</strong> Entity List (Zhipu) and regulatory overhang (DeepSeek) change procurement math overnight.</li>
+      <li><strong>Open ≠ free:</strong> multi-hundred-billion to trillion-parameter MoEs need serious GPUs, networking, and ops.</li>
+      <li><strong>Benchmark theater:</strong> public evals can be gamed, saturated, or poorly correlated with your agent loop. Distillation accusations appear periodically; treat each claim as contested unless evidenced.</li>
+      <li><strong>License nuance:</strong> K3’s license is not the same as DeepSeek/GLM MIT-style openness.</li>
+      <li><strong>Safety and policy alignment</strong> for Western deployments is uneven and under-specified relative to Anthropic/OpenAI’s public safety narratives.</li>
+    </ul>
+    <p>
+      AA screenshots are useful. They are also <strong>churny</strong>. Label the models in the
+      image, date the capture, and refuse to treat them as eternal truth.
+    </p>
+
+    <h2>What this means for builders, companies, and investors</h2>
+    <p>
+      <strong>Builders:</strong> Route by workload. Use DeepSeek-class APIs for high-volume
+      reasoning and drafting. Use Kimi-class models when context length is the bottleneck. Use
+      GLM-class open weights when you need to fine-tune or self-host. Keep Claude/GPT as the
+      reliability tier for agent workflows that fail loudly when they fail. Multi-model routing
+      is no longer exotic—it is hygiene.
+    </p>
+    <p>
+      <strong>Companies:</strong> Separate “model IQ” from “vendor risk.” A CIO can love a cost
+      curve and still refuse a vendor for compliance reasons. Conversely, paying 5–10× for tokens
+      without measuring task success rate is how prestige budgets die. Pilot open weights behind
+      the firewall; keep a closed US model for customer-facing agents until your eval harness says
+      otherwise.
+    </p>
+    <p>
+      <strong>Investors:</strong> Do not underwrite a single “winner of AI.” Underwrite
+      <strong>business models</strong>. Chinese labs are compressing the price of cognition and
+      exporting open deployment. US labs are monetizing trust, agency, and distribution. Both can
+      be large. The fragile thesis is “one model family owns all three races forever.”
+    </p>
+    <p>
+      Also watch the second-order effects: Western labs shipping cheaper tiers, Chinese labs
+      raising peak prices, and buyers standardizing on routers rather than brand loyalty.
+    </p>
+
+    <h2>Final takeaway</h2>
+    <p>
+      The race that mattered in 2023 was inventing frontier intelligence. The race that matters
+      in 2026 is <strong>who becomes the default model for agents when intelligence is cheap</strong>.
+    </p>
+    <p>
+      On public composites, Claude and OpenAI still often sit at the tip. On cost-per-task and
+      self-hostability, DeepSeek, GLM, and Kimi rewrote the buyer’s spreadsheet. Convergence on
+      benchmarks; divergence on business model: <strong>commoditized cognition versus trusted agency</strong>.
+    </p>
+    <p>
+      Nobody “won AI.” What changed is that the menu is real—and the expensive default now has
+      to earn its premium every day.
+    </p>
+
+    <h2>Sources &amp; caveats</h2>
+    <p>
+      Public technical reports and company pages:
+      <a href="https://arxiv.org/abs/2412.19437" target="_blank" rel="noopener">DeepSeek-V3 paper</a>,
+      <a href="https://github.com/deepseek-ai/DeepSeek-R1" target="_blank" rel="noopener">DeepSeek-R1</a>,
+      <a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener">DeepSeek pricing</a>,
       <a href="https://z.ai/blog/glm-4.5" target="_blank" rel="noopener">GLM-4.5</a>,
-      <a href="https://www.kimi.com/blog/kimi-k2" target="_blank" rel="noopener">Kimi K2</a>,
-      <a href="https://openai.com/index/introducing-gpt-5/" target="_blank" rel="noopener">GPT-5</a>, and
-      <a href="https://www.anthropic.com/news/claude-4" target="_blank" rel="noopener">Claude 4</a>).
-      The two charts are screenshots from Artificial Analysis and should be read
-      as a point-in-time composite, not a universal ranking. Model names, scores
-      and prices move fast — always check current official pages before you ship.
+      <a href="https://github.com/MoonshotAI/Kimi-K2" target="_blank" rel="noopener">Kimi K2</a>,
+      <a href="https://www.anthropic.com/news/claude-4" target="_blank" rel="noopener">Claude 4</a>,
+      <a href="https://openai.com/index/introducing-gpt-5/" target="_blank" rel="noopener">GPT-5</a>.
+      Valuation (DeepSeek ~$52B) via Caixin reporting; Z.ai IPO via company / PR Newswire
+      materials—secondary sources. Artificial Analysis charts are point-in-time composites
+      (~16 Aug 2026), not universal rankings. Prices, scores, and model names move fast—verify
+      before you ship.
     </p>
   </div>
 </article>
