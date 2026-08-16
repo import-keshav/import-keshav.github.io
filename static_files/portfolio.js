@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const isBlogPage = /\/blogs(\/|$)/.test(location.pathname);
     const themeKey = isBlogPage ? 'blog-theme' : 'theme';
     const currentTheme = localStorage.getItem(themeKey) || (isBlogPage ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', currentTheme);
     body.setAttribute('data-theme', currentTheme);
     
     // Update toggle icon based on current theme
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentTheme = body.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         
+        document.documentElement.setAttribute('data-theme', newTheme);
         body.setAttribute('data-theme', newTheme);
         localStorage.setItem(themeKey, newTheme);
         updateThemeIcon(newTheme);
