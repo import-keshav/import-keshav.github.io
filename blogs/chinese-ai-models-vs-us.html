@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="canonical" href="https://import-keshav.github.io/blogs/chinese-ai-models-vs-us.html">
+<link rel="stylesheet" href="../static_files/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>DeepSeek, GLM &amp; Kimi: How Chinese AI Models Are Catching Up to Claude and OpenAI — Keshav Bathla</title>
+<meta name="description" content="A simple look at how DeepSeek, Zhipu GLM, and Moonshot Kimi are competing with Claude and OpenAI on cost, speed, coding, and long context — and why that race helps end users.">
+<meta name="author" content="Keshav Bathla">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238e24aa'/%3E%3Cstop offset='1' stop-color='%23ff6e40'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='45' font-family='Arial' font-weight='bold' font-size='36' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+  <div class="theme-toggle-slider">
+    <span class="theme-toggle-icon">🌙</span>
+  </div>
+</button>
+
+<article class="blog-page">
+  <a class="blog-back" href="index.html">← All blogs</a>
+  <h1>DeepSeek, GLM &amp; Kimi: How Chinese AI Models Are Catching Up to Claude and OpenAI</h1>
+  <p class="blog-meta">22 August, 2026 · ~7 min read</p>
+
+  <div class="blog-body">
+    <p>
+      For a long time, the AI conversation felt simple:
+      if you wanted the best models, you looked at
+      <a href="https://openai.com" target="_blank" rel="noopener">OpenAI</a>
+      (GPT line) and
+      <a href="https://www.anthropic.com" target="_blank" rel="noopener">Anthropic</a>
+      (Claude).
+    </p>
+    <p>
+      In <strong>August 2026</strong>, that story got louder from the other side of the Pacific.
+      Chinese labs — especially
+      <strong>DeepSeek</strong>,
+      <strong>GLM</strong> from Zhipu AI, and
+      <strong>Kimi</strong> from Moonshot AI —
+      stopped being “almost good enough” and started looking like real competition:
+      strong quality, often much lower cost, and in many cases open weights you can run yourself.
+    </p>
+    <p>
+      This post is a plain-English look at that rise — who these players are,
+      how they stack up against US models, and why the race is actually good for us (the users).
+    </p>
+
+    <h2>The US bar they are racing against</h2>
+    <p>
+      On the US side, the names most people compare against are:
+    </p>
+    <ul>
+      <li><strong>OpenAI</strong> — GPT-5 family (and related thinking / efficiency models). Product home: <a href="https://openai.com" target="_blank" rel="noopener">openai.com</a></li>
+      <li><strong>Anthropic</strong> — Claude Opus / Sonnet line (and newer Claude frontier models). Product home: <a href="https://www.anthropic.com" target="_blank" rel="noopener">anthropic.com</a></li>
+    </ul>
+    <p>
+      These still often win on polish, enterprise trust, and absolute top-end scores.
+      The Chinese challenge is not always “we beat Claude on every benchmark.”
+      It is: <strong>we get close enough, much cheaper, faster to ship, and sometimes open.</strong>
+    </p>
+
+    <h2>DeepSeek (DeepSeek / 深度求索)</h2>
+    <p>
+      Site: <a href="https://www.deepseek.com" target="_blank" rel="noopener">deepseek.com</a>
+      · API docs: <a href="https://api-docs.deepseek.com" target="_blank" rel="noopener">api-docs.deepseek.com</a>
+    </p>
+    <p>
+      DeepSeek became famous for a simple idea:
+      strong reasoning and coding quality at a price that feels almost unfair.
+      Models like <strong>DeepSeek-V3</strong> and the reasoning-focused <strong>DeepSeek-R1</strong>
+      helped set the “open / cheap frontier” narrative.
+      Newer API models (V4-class Flash / Pro) keep pushing long context and thinking modes.
+    </p>
+    <p>What stands out:</p>
+    <ul>
+      <li><strong>Low cost</strong> — API rates that undercut typical Claude / GPT frontier pricing by a wide margin.</li>
+      <li><strong>Fast enough for real work</strong> — especially Flash-style SKUs for everyday coding and chat.</li>
+      <li><strong>Strong reasoning / coding value</strong> — good at math and software tasks relative to what you pay.</li>
+      <li><strong>Developer-friendly APIs</strong> — easy to plug into tools that already speak OpenAI-style endpoints.</li>
+    </ul>
+
+    <h2>GLM (Zhipu AI / 智谱 · Z.ai)</h2>
+    <p>
+      Company: <strong>Zhipu AI</strong>
+      · Product / research: <a href="https://z.ai" target="_blank" rel="noopener">z.ai</a>
+      · GLM-5 announcement: <a href="https://z.ai/blog/glm-5" target="_blank" rel="noopener">z.ai/blog/glm-5</a>
+    </p>
+    <p>
+      GLM is Zhipu’s model family. With <strong>GLM-5</strong> (and the earlier GLM-4.5 / 4.7 line),
+      they positioned open-weight models as serious options for
+      coding agents, long-horizon tasks, and document-heavy workflows —
+      not just demos.
+    </p>
+    <p>What stands out:</p>
+    <ul>
+      <li><strong>Open weights mindset</strong> — more room to self-host, fine-tune, and audit.</li>
+      <li><strong>Agentic coding story</strong> — aimed at long coding sessions, not only one-shot answers.</li>
+      <li><strong>Practical deliverables</strong> — office / document style agent outputs in their product narrative.</li>
+      <li><strong>Cost + deploy flexibility</strong> — useful when you care about infra choice, not only a hosted chat box.</li>
+    </ul>
+
+    <h2>Kimi (Moonshot AI / 月之暗面)</h2>
+    <p>
+      Company: <strong>Moonshot AI</strong>
+      · Chat: <a href="https://www.kimi.com" target="_blank" rel="noopener">kimi.com</a>
+      · API: <a href="https://platform.kimi.ai" target="_blank" rel="noopener">platform.kimi.ai</a>
+    </p>
+    <p>
+      Kimi’s brand is “bring the whole context.”
+      From <strong>Kimi K2</strong> into <strong>K2.5</strong> (multimodal / agentic) and later
+      <strong>K3</strong>-class flagships with very large context windows,
+      Moonshot leaned into long documents, big codebases, and agent workflows.
+    </p>
+    <p>What stands out:</p>
+    <ul>
+      <li><strong>Huge context</strong> — strong for whole-repo and long-doc jobs where smaller windows choke.</li>
+      <li><strong>Agentic + multimodal</strong> — tools, vision, and multi-step work in one product story.</li>
+      <li><strong>Coding-focused SKUs</strong> — dedicated “code” variants for software engineering loops.</li>
+      <li><strong>Choice of tiers</strong> — cheaper K2.x options for volume, premium flagship when you need max quality.</li>
+    </ul>
+
+    <h2>How the competition actually feels</h2>
+    <p>
+      Put simply:
+    </p>
+    <ul>
+      <li><strong>DeepSeek</strong> — “why am I paying 10× for this task?”</li>
+      <li><strong>GLM</strong> — “can I own / host a near-frontier model?”</li>
+      <li><strong>Kimi</strong> — “can I stuff the whole problem into context and still move fast?”</li>
+      <li><strong>Claude / GPT</strong> — still the default when you want maximum polish, trust, and product ecosystem.</li>
+    </ul>
+    <p>
+      Nobody “won AI.” What changed is that builders now have a real menu —
+      not a two-company monopoly of taste.
+    </p>
+
+    <h2>Why this race is good for end users</h2>
+    <p>
+      Geopolitics makes the headlines. Users feel something more practical:
+    </p>
+    <ul>
+      <li><strong>Lower prices</strong> — pressure from cheap Chinese APIs forces everyone to ship better value tiers.</li>
+      <li><strong>Faster shipping</strong> — more labs shipping means more experiments, more model drops, less waiting.</li>
+      <li><strong>Open options</strong> — open weights mean privacy, custom fine-tunes, and self-hosting when you need them.</li>
+      <li><strong>Real choice</strong> — pick cheap reasoning today, long-context tomorrow, Claude when the task is delicate.</li>
+    </ul>
+    <p>
+      Healthy competition is not noise. It is why frontier intelligence is spreading beyond a small club —
+      into tools, startups, and everyday developer workflows.
+    </p>
+
+    <h2>TL;DR</h2>
+    <p>
+      In August 2026, Chinese models from
+      <a href="https://www.deepseek.com" target="_blank" rel="noopener">DeepSeek</a>,
+      <a href="https://z.ai" target="_blank" rel="noopener">Zhipu (GLM)</a>, and
+      <a href="https://www.kimi.com" target="_blank" rel="noopener">Moonshot (Kimi)</a>
+      are competing hard with
+      <a href="https://openai.com" target="_blank" rel="noopener">OpenAI</a> and
+      <a href="https://www.anthropic.com" target="_blank" rel="noopener">Anthropic Claude</a> —
+      especially on cost, open weights, coding agents, and long context.
+      US models still set a high bar. The win for the rest of us is simple:
+      better models, more choice, and lower bills.
+    </p>
+
+    <p class="blog-source">
+      Notes based on public docs and company pages
+      (<a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener">DeepSeek pricing</a>,
+      <a href="https://z.ai/blog/glm-5" target="_blank" rel="noopener">GLM-5</a>,
+      <a href="https://platform.kimi.ai" target="_blank" rel="noopener">Kimi platform</a>).
+      Model names and prices move fast — always check the latest official pages before you ship.
+    </p>
+  </div>
+</article>
+
+<script src="../static_files/portfolio.js"></script>
+</body>
+</html>
