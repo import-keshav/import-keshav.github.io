@@ -59,8 +59,7 @@
     </ol>
 
     <figure class="blog-figure">
-      <!-- After you render Diagram 1, save as: ../static_files/blog/01-router-overview.png -->
-      <div class="blog-img-placeholder" id="diagram-01">Diagram 1 — Router overview (image pending)</div>
+      <img src="../static_files/blog/01-router-overview.png" alt="Cursor Router overview: message goes to Compass, then cheap or frontier model, then answer">
       <figcaption>Every chat turn goes through complexity check → then model pick.</figcaption>
     </figure>
 
@@ -100,8 +99,7 @@
     </p>
 
     <figure class="blog-figure">
-      <!-- After you render Diagram 2, save as: ../static_files/blog/02-compass-threshold.png -->
-      <div class="blog-img-placeholder" id="diagram-02">Diagram 2 — Compass score vs threshold (image pending)</div>
+      <img src="../static_files/blog/02-compass-threshold.png" alt="Compass score from 0 to 1 with threshold tau deciding cheap vs frontier model">
       <figcaption>Compass score decides cheap path vs frontier path.</figcaption>
     </figure>
 
@@ -125,12 +123,6 @@
       <li><strong>Fable</strong> — shines at debugging and visual / UI-heavy implementation.</li>
     </ul>
 
-    <figure class="blog-figure">
-      <!-- After you render Diagram 3, save as: ../static_files/blog/03-model-strengths.png -->
-      <div class="blog-img-placeholder" id="diagram-03">Diagram 3 — Model strengths map (image pending)</div>
-      <figcaption>Match the job to the model’s sweet spot.</figcaption>
-    </figure>
-
     <h2>The routing algorithm (simple version)</h2>
     <ol>
       <li>Compass scores the turn.</li>
@@ -143,8 +135,7 @@
     </ol>
 
     <figure class="blog-figure">
-      <!-- After you render Diagram 4, save as: ../static_files/blog/04-routing-flow.png -->
-      <div class="blog-img-placeholder" id="diagram-04">Diagram 4 — Full routing decision flow (image pending)</div>
+      <img src="../static_files/blog/04-routing-flow.png" alt="Full Cursor Router decision flow from Compass through uplift check and Auto Balance vs Auto Intelligence">
       <figcaption>Compass first, then taxonomy + budget rules.</figcaption>
     </figure>
 
@@ -158,6 +149,12 @@
       <li><strong>Auto Intelligence</strong> — more room to call frontier models when the gain is worth it.
         Aim: near top-tier satisfaction, still far cheaper than always using the top model.</li>
     </ul>
+
+    <figure class="blog-figure">
+      <img src="../static_files/blog/05-cost-quality-dial.png" alt="Cost vs quality dial: Auto Balance in ideal zone, Auto Intelligence near top quality at lower cost than always using top model">
+      <figcaption>Router modes aim for high quality without always paying frontier prices.</figcaption>
+    </figure>
+
     <p>
       Cursor reports (as of their Aug 2026 write-up) that Auto Intelligence can sit above
       Fable-level satisfaction at ~68% lower cost, and Auto Balance can beat Opus 4.8 satisfaction
