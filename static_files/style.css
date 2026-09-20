@@ -212,7 +212,32 @@ ul, ol { margin: 0 0 var(--space-4); padding-left: 1.25rem; }
 .nav-panel a:hover { background: var(--color-surface-raised); color: var(--color-text-primary); }
 
 .hero { padding: 96px 0 72px; }
-.hero-copy { max-width: 900px; }
+.home-hero-inner {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+}
+.home-hero-copy {
+  max-width: 720px;
+}
+.home-hero-portrait {
+  width: min(42vw, 160px);
+  margin: 0;
+  justify-self: start;
+}
+.home-hero-portrait picture,
+.home-hero-portrait img {
+  display: block;
+  width: 100%;
+}
+.home-hero-portrait img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
 .hero h1 {
   font-size: clamp(2.35rem, 6.4vw, 4.4rem);
   line-height: 1.06;
@@ -800,38 +825,11 @@ ul, ol { margin: 0 0 var(--space-4); padding-left: 1.25rem; }
 .section.consulting-bridge {
   padding: 72px 0;
 }
-.consulting-bridge-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-8);
-}
 .consulting-bridge-copy {
   max-width: 680px;
 }
-.consulting-bridge-portrait {
-  flex-shrink: 0;
-  max-width: 170px;
-  width: 100%;
-  display: none;
-}
-.consulting-bridge-portrait picture,
-.consulting-bridge-portrait img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  border-radius: var(--radius);
-  border: 1px solid var(--color-border-strong);
-  background: var(--color-surface-raised);
-}
 .consulting-bridge .hero-meta {
   margin-bottom: var(--space-6);
-}
-@media (min-width: 760px) {
-  .consulting-bridge-portrait {
-    display: block;
-  }
 }
 .section-intro:has(+ .offer-investment-note) {
   margin-bottom: var(--space-6);
@@ -1057,6 +1055,14 @@ ul, ol { margin: 0 0 var(--space-4); padding-left: 1.25rem; }
   .nav-menu { display: none; }
   .section { padding: 120px 0; }
   .hero h1 { line-height: 1.02; }
+  .home-hero-inner {
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: var(--space-12);
+  }
+  .home-hero-portrait {
+    width: 260px;
+    justify-self: end;
+  }
   .consulting-hero-inner {
     grid-template-columns: minmax(0, 1fr) 260px;
     gap: var(--space-12);
