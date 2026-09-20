@@ -9,29 +9,35 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../static_files/style.css">
-<title>AI Engineering Blog — Agents, LLMs &amp; Systems | Keshav Bathla</title>
-<meta name="description" content="Practical notes on AI agents, LLM routing, RAG, model choice, and production AI systems by Keshav Bathla — AI engineer in Bengaluru.">
+<title>Production AI Engineering Blog | Keshav Bathla</title>
+<meta name="description" content="Technical writing on production AI agents, MCP, LLM routing, RAG, evals, and scalable backend systems by Bengaluru engineer Keshav Bathla.">
 <meta name="author" content="Keshav Bathla">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0b0d10">
-<meta property="og:title" content="AI Engineering Blog — Agents, LLMs &amp; Systems | Keshav Bathla">
-<meta property="og:description" content="Practical notes on AI agents, LLM routing, RAG, and production AI systems.">
+<meta property="og:title" content="Production AI Engineering Blog | Keshav Bathla">
+<meta property="og:description" content="Technical writing on production AI agents, MCP, LLM routing, RAG, evals, and scalable backend systems by Bengaluru engineer Keshav Bathla.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://import-keshav.github.io/blogs/">
+<meta property="og:locale" content="en_IN">
 <meta property="og:image" content="https://import-keshav.github.io/static_files/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:alt" content="Keshav Bathla, Senior AI Systems and Backend Engineer in Bengaluru">
 <meta property="og:site_name" content="Keshav Bathla">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="AI Engineering Blog — Agents, LLMs &amp; Systems | Keshav Bathla">
-<meta name="twitter:description" content="Practical notes on AI agents, LLM routing, RAG, and production AI systems.">
+<meta name="twitter:title" content="Production AI Engineering Blog | Keshav Bathla">
+<meta name="twitter:description" content="Technical writing on production AI agents, MCP, LLM routing, RAG, evals, and scalable backend systems.">
 <meta name="twitter:image" content="https://import-keshav.github.io/static_files/og-default.jpg">
+<meta name="twitter:image:alt" content="Keshav Bathla, Senior AI Systems and Backend Engineer">
 <meta name="twitter:creator" content="@import_keshav">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%237c9cff'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-weight='700' font-size='18' fill='%230b0d10'%3EK%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "AI Engineering Blog — Keshav Bathla",
-  "description": "Practical notes on AI agents, LLM routing, RAG, model choice, and production AI systems.",
+  "name": "Production AI Engineering Blog — Keshav Bathla",
+  "description": "Technical writing on production AI agents, MCP, LLM routing, RAG, evals, and scalable backend systems.",
   "url": "https://import-keshav.github.io/blogs/",
   "author": {
     "@type": "Person",
@@ -56,13 +62,9 @@
       <a href="index.html" aria-current="page">Writing</a>
       <a href="../index.html#experience">Experience</a>
       <a href="../index.html#contact">Contact</a>
-      <a class="nav-resume" href="../static_files/Keshav's Resume.pdf">Download Résumé</a>
+      <a class="nav-resume" href="../static_files/keshav-bathla-resume.pdf">Download Résumé</a>
     </nav>
     <div class="header-actions">
-      <div class="nav-mobile-links">
-        <a href="index.html" aria-current="page">Writing</a>
-        <a href="../index.html#contact">Contact</a>
-      </div>
       <details class="nav-menu" id="navMenu">
         <summary class="menu-summary" aria-label="Open menu">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -72,11 +74,10 @@
           <a href="index.html" aria-current="page">Writing</a>
           <a href="../index.html#experience">Experience</a>
           <a href="../index.html#contact">Contact</a>
-          <a href="../static_files/Keshav's Resume.pdf">Download Résumé</a>
-          <button type="button" class="theme-toggle menu-theme">Theme</button>
+          <a href="../static_files/keshav-bathla-resume.pdf">Download Résumé</a>
         </div>
       </details>
-      <button type="button" class="theme-toggle desktop-theme" aria-pressed="false" aria-label="Switch to light theme">
+      <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Switch to light theme">
         <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M5 12H3M21 12h-2M6.2 6.2 4.8 4.8M19.2 19.2l-1.4-1.4M6.2 17.8 4.8 19.2M19.2 4.8l-1.4 1.4"/></svg>
         <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4 7 7 0 0 0 20 14.5z"/></svg>
       </button>
@@ -124,9 +125,9 @@
     <p>© 2026 Keshav Bathla · Bengaluru, India</p>
     <nav class="footer-links" aria-label="Social">
       <a href="mailto:keshavbathla2017@gmail.com">Email</a>
-      <a href="https://www.linkedin.com/in/keshav-bathla-b517a2152/" rel="noopener">LinkedIn</a>
-      <a href="https://github.com/import-keshav" rel="noopener">GitHub</a>
-      <a href="https://x.com/import_keshav" rel="noopener">X</a>
+      <a href="https://www.linkedin.com/in/keshav-bathla-b517a2152/" rel="me noopener">LinkedIn</a>
+      <a href="https://github.com/import-keshav" rel="me noopener">GitHub</a>
+      <a href="https://x.com/import_keshav" rel="me noopener">X</a>
     </nav>
   </div>
 </footer>
