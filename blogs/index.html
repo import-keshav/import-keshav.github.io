@@ -10,12 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../static_files/style.css">
 <title>Production AI Engineering Blog | Keshav Bathla</title>
-<meta name="description" content="Technical writing on production AI agents, MCP, LLM routing, RAG, evals, and scalable backend systems by Bengaluru engineer Keshav Bathla.">
+<meta name="description" content="Technical writing on production AI agents, MCP, LLM routing, RAG, evals, and high-scale backend systems by Bengaluru engineer Keshav Bathla.">
 <meta name="author" content="Keshav Bathla">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0b0d10">
 <meta property="og:title" content="Production AI Engineering Blog | Keshav Bathla">
-<meta property="og:description" content="Technical writing on production AI agents, MCP, LLM routing, RAG, evals, and scalable backend systems by Bengaluru engineer Keshav Bathla.">
+<meta property="og:description" content="Technical writing on production AI agents, MCP, LLM routing, RAG, evals, and high-scale backend systems by Bengaluru engineer Keshav Bathla.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://import-keshav.github.io/blogs/">
 <meta property="og:locale" content="en_US">
@@ -27,28 +27,98 @@
 <meta property="og:site_name" content="Keshav Bathla">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Production AI Engineering Blog | Keshav Bathla">
-<meta name="twitter:description" content="Technical writing on production AI agents, MCP, LLM routing, RAG, evals, and scalable backend systems.">
+<meta name="twitter:description" content="Technical writing on production AI agents, MCP, LLM routing, RAG, evals, and high-scale backend systems.">
 <meta name="twitter:image" content="https://import-keshav.github.io/static_files/og-default.jpg">
 <meta name="twitter:image:alt" content="Keshav Bathla, Senior AI Systems and Backend Engineer">
 <meta name="twitter:creator" content="@import_keshav">
+<meta name="twitter:site" content="@import_keshav">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%237c9cff'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-weight='700' font-size='18' fill='%230b0d10'%3EK%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": "Production AI Engineering Blog — Keshav Bathla",
-  "description": "Technical writing on production AI agents, MCP, LLM routing, RAG, evals, and scalable backend systems.",
-  "url": "https://import-keshav.github.io/blogs/",
-  "author": {
-    "@type": "Person",
-    "name": "Keshav Bathla",
-    "url": "https://import-keshav.github.io/"
-  },
-  "isPartOf": {
-    "@type": "WebSite",
-    "name": "Keshav Bathla",
-    "url": "https://import-keshav.github.io/"
-  }
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://import-keshav.github.io/#website",
+      "url": "https://import-keshav.github.io/",
+      "name": "Keshav Bathla",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://import-keshav.github.io/#person"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://import-keshav.github.io/#person",
+      "name": "Keshav Bathla",
+      "url": "https://import-keshav.github.io/"
+    },
+    {
+      "@type": "CollectionPage",
+      "@id": "https://import-keshav.github.io/blogs/#collection",
+      "url": "https://import-keshav.github.io/blogs/",
+      "name": "Production AI Engineering Blog — Keshav Bathla",
+      "description": "Technical writing on production AI agents, MCP, LLM routing, RAG, evals, and high-scale backend systems.",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://import-keshav.github.io/#website"
+      },
+      "about": {
+        "@id": "https://import-keshav.github.io/#person"
+      },
+      "breadcrumb": {
+        "@id": "https://import-keshav.github.io/blogs/#breadcrumb"
+      },
+      "mainEntity": {
+        "@id": "https://import-keshav.github.io/blogs/#itemlist"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://import-keshav.github.io/blogs/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://import-keshav.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Writing",
+          "item": "https://import-keshav.github.io/blogs/"
+        }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://import-keshav.github.io/blogs/#itemlist",
+      "name": "Published writing",
+      "itemListOrder": "https://schema.org/ItemListOrderDescending",
+      "numberOfItems": 3,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Coding is Dying. What Comes Next?",
+          "url": "https://import-keshav.github.io/blogs/coding-is-dying-what-comes-next.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Cheap Intelligence, Expensive Trust: DeepSeek, GLM & Kimi vs Claude and OpenAI",
+          "url": "https://import-keshav.github.io/blogs/chinese-ai-models-vs-us.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "How Cursor Router picks the right model (explained simply)",
+          "url": "https://import-keshav.github.io/blogs/how-cursor-router-works.html"
+        }
+      ]
+    }
+  ]
 }
 </script>
 </head>

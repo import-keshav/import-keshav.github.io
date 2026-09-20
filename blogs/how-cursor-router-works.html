@@ -10,12 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../static_files/style.css">
 <title>How Cursor Router Works: LLM Model Routing | Keshav Bathla</title>
-<meta name="description" content="A practical breakdown of Cursor Router, Compass complexity scoring, model selection, and cost-quality tradeoffs in production LLM routing.">
+<meta name="description" content="A practical breakdown of how Cursor Router uses Compass complexity scoring, model selection, and cost-quality tradeoffs in production LLM routing.">
 <meta name="author" content="Keshav Bathla">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0b0d10">
 <meta property="og:title" content="How Cursor Router Works: LLM Model Routing | Keshav Bathla">
-<meta property="og:description" content="A practical breakdown of Cursor Router, Compass complexity scoring, model selection, and cost-quality tradeoffs in production LLM routing.">
+<meta property="og:description" content="A practical breakdown of how Cursor Router uses Compass complexity scoring, model selection, and cost-quality tradeoffs in production LLM routing.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://import-keshav.github.io/blogs/how-cursor-router-works.html">
 <meta property="og:locale" content="en_US">
@@ -30,35 +30,91 @@
 <meta property="article:author" content="Keshav Bathla">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="How Cursor Router Works: LLM Model Routing | Keshav Bathla">
-<meta name="twitter:description" content="A practical breakdown of Cursor Router, Compass complexity scoring, model selection, and cost-quality tradeoffs in production LLM routing.">
+<meta name="twitter:description" content="A practical breakdown of how Cursor Router uses Compass complexity scoring, model selection, and cost-quality tradeoffs in production LLM routing.">
 <meta name="twitter:image" content="https://import-keshav.github.io/static_files/og-default.jpg">
 <meta name="twitter:image:alt" content="Keshav Bathla explaining how Cursor Router selects LLM models">
 <meta name="twitter:creator" content="@import_keshav">
+<meta name="twitter:site" content="@import_keshav">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%237c9cff'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-weight='700' font-size='18' fill='%230b0d10'%3EK%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "How Cursor Router Works: LLM Model Routing",
-  "description": "A practical breakdown of Cursor Router, Compass complexity scoring, model selection, and cost-quality tradeoffs in production LLM routing.",
-  "image": "https://import-keshav.github.io/static_files/og-default.jpg",
-  "datePublished": "2026-08-08",
-  "dateModified": "2026-09-20",
-  "author": {
-    "@type": "Person",
-    "name": "Keshav Bathla",
-    "url": "https://import-keshav.github.io/"
-  },
-  "publisher": {
-    "@type": "Person",
-    "name": "Keshav Bathla",
-    "url": "https://import-keshav.github.io/"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://import-keshav.github.io/blogs/how-cursor-router-works.html"
-  },
-  "keywords": ["Cursor Router", "LLM routing", "AI coding agents", "model routing", "Compass"]
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://import-keshav.github.io/#website",
+      "url": "https://import-keshav.github.io/",
+      "name": "Keshav Bathla",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://import-keshav.github.io/#person"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://import-keshav.github.io/#person",
+      "name": "Keshav Bathla",
+      "url": "https://import-keshav.github.io/"
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://import-keshav.github.io/blogs/how-cursor-router-works.html#article",
+      "url": "https://import-keshav.github.io/blogs/how-cursor-router-works.html",
+      "headline": "How Cursor Router Works: LLM Model Routing",
+      "alternativeHeadline": "How Cursor Router picks the right model (explained simply)",
+      "description": "A practical breakdown of how Cursor Router uses Compass complexity scoring, model selection, and cost-quality tradeoffs in production LLM routing.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://import-keshav.github.io/static_files/og-default.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "2026-08-08",
+      "dateModified": "2026-09-20",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://import-keshav.github.io/#person"
+      },
+      "publisher": {
+        "@id": "https://import-keshav.github.io/#person"
+      },
+      "isPartOf": {
+        "@id": "https://import-keshav.github.io/#website"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://import-keshav.github.io/blogs/how-cursor-router-works.html"
+      },
+      "breadcrumb": {
+        "@id": "https://import-keshav.github.io/blogs/how-cursor-router-works.html#breadcrumb"
+      },
+      "keywords": ["Cursor Router", "LLM routing", "AI coding agents", "model routing", "Compass"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://import-keshav.github.io/blogs/how-cursor-router-works.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://import-keshav.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Writing",
+          "item": "https://import-keshav.github.io/blogs/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "How Cursor Router picks the right model",
+          "item": "https://import-keshav.github.io/blogs/how-cursor-router-works.html"
+        }
+      ]
+    }
+  ]
 }
 </script>
 </head>
@@ -140,7 +196,7 @@
     </ol>
 
     <figure class="blog-figure">
-      <img src="../static_files/blog/01-router-overview.png" alt="Cursor Router overview: message goes to Compass, then cheap or frontier model, then answer" loading="lazy" width="1200" height="675">
+      <img src="../static_files/blog/01-router-overview.png" alt="Cursor Router overview: message goes to Compass, then cheap or frontier model, then answer" loading="eager" fetchpriority="high" width="1024" height="170">
       <figcaption>Every chat turn goes through complexity check → then model pick.</figcaption>
     </figure>
 
@@ -180,7 +236,7 @@
     </p>
 
     <figure class="blog-figure">
-      <img src="../static_files/blog/02-compass-threshold.png" alt="Compass score from 0 to 1 with threshold tau deciding cheap vs frontier model" loading="lazy" width="1200" height="675">
+      <img src="../static_files/blog/02-compass-threshold.png" alt="Compass score from 0 to 1 with threshold tau deciding cheap vs frontier model" loading="lazy" width="1024" height="465">
       <figcaption>Compass score decides cheap path vs frontier path.</figcaption>
     </figure>
 
@@ -205,7 +261,7 @@
     </ul>
 
     <figure class="blog-figure">
-      <img src="../static_files/blog/03-model-strengths.png" alt="Cursor model strengths: Grok for routine work, Sol for planning, Opus for execution, and Fable for debugging and visual work" loading="lazy" width="1200" height="675">
+      <img src="../static_files/blog/03-model-strengths.png" alt="Cursor model strengths: Grok for routine work, Sol for planning, Opus for execution, and Fable for debugging and visual work" loading="lazy" width="651" height="789">
       <figcaption>Match the job to the model’s sweet spot.</figcaption>
     </figure>
 
@@ -221,7 +277,7 @@
     </ol>
 
     <figure class="blog-figure">
-      <img src="../static_files/blog/04-routing-flow.png" alt="Full Cursor Router decision flow from Compass through uplift check and Auto Balance vs Auto Intelligence" loading="lazy" width="1200" height="675">
+      <img src="../static_files/blog/04-routing-flow.png" alt="Full Cursor Router decision flow from Compass through uplift check and Auto Balance vs Auto Intelligence" loading="lazy" width="465" height="808">
       <figcaption>Compass first, then taxonomy + budget rules.</figcaption>
     </figure>
 
@@ -237,7 +293,7 @@
     </ul>
 
     <figure class="blog-figure">
-      <img src="../static_files/blog/05-cost-quality-dial.png" alt="Cost vs quality dial: Auto Balance in ideal zone, Auto Intelligence near top quality at lower cost than always using top model" loading="lazy" width="1200" height="675">
+      <img src="../static_files/blog/05-cost-quality-dial.png" alt="Cost vs quality dial: Auto Balance in ideal zone, Auto Intelligence near top quality at lower cost than always using top model" loading="lazy" width="749" height="705">
       <figcaption>Router modes aim for high quality without always paying frontier prices.</figcaption>
     </figure>
 

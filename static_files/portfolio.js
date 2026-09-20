@@ -33,4 +33,24 @@
       });
     });
   }
+
+  // Frictionless copy email handler
+  document.querySelectorAll(".copy-email-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var email = btn.getAttribute("data-email") || "keshavbathla2017@gmail.com";
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(function () {
+          var original = btn.innerHTML;
+          btn.innerHTML = '<span aria-hidden="true">✓</span> Copied to clipboard!';
+          setTimeout(function () {
+            btn.innerHTML = original;
+          }, 2400);
+        }).catch(function () {
+          location.href = "mailto:" + email;
+        });
+      } else {
+        location.href = "mailto:" + email;
+      }
+    });
+  });
 })();
