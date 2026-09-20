@@ -18,7 +18,9 @@
     });
   }
 
-  apply(localStorage.getItem("theme") || "dark");
+  var initial = "dark";
+  try { initial = localStorage.getItem("theme") || "dark"; } catch (e) {}
+  apply(initial);
 
   toggles.forEach(function (btn) {
     btn.addEventListener("click", function () {
@@ -34,23 +36,52 @@
     });
   }
 
-  // Frictionless copy email handler
+  // ponytail: clipboard → execCommand → mailto. Ceiling: no analytics on copy-fail.
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.setAttribute("aria-hidden", "true");
+    ta.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;opacity:0";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function showCopied(btn) {
+    if (btn._copyTimer) clearTimeout(btn._copyTimer);
+    if (!btn._copyOriginal) btn._copyOriginal = btn.innerHTML;
+    btn.innerHTML = '<span aria-hidden="true">✓</span> Copied to clipboard!';
+    btn.setAttribute("aria-live", "polite");
+    btn._copyTimer = setTimeout(function () {
+      btn.innerHTML = btn._copyOriginal;
+      btn._copyTimer = null;
+    }, 2400);
+  }
+
+  function copyEmail(email, btn) {
+    function succeed() { showCopied(btn); }
+    function fail() { location.href = "mailto:" + email; }
+
+    if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+      navigator.clipboard.writeText(email).then(succeed).catch(function () {
+        if (fallbackCopy(email)) succeed();
+        else fail();
+      });
+      return;
+    }
+    if (fallbackCopy(email)) succeed();
+    else fail();
+  }
+
   document.querySelectorAll(".copy-email-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      var email = btn.getAttribute("data-email") || "keshavbathla2017@gmail.com";
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(email).then(function () {
-          var original = btn.innerHTML;
-          btn.innerHTML = '<span aria-hidden="true">✓</span> Copied to clipboard!';
-          setTimeout(function () {
-            btn.innerHTML = original;
-          }, 2400);
-        }).catch(function () {
-          location.href = "mailto:" + email;
-        });
-      } else {
-        location.href = "mailto:" + email;
-      }
+      copyEmail(btn.getAttribute("data-email") || "keshavbathla2017@gmail.com", btn);
     });
   });
 })();
