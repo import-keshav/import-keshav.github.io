@@ -568,10 +568,28 @@ ul, ol { margin: 0 0 var(--space-4); padding-left: 1.25rem; }
   padding: var(--space-6);
   margin: var(--space-8) 0;
 }
+.author-cta-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+.author-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border-strong);
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--color-surface);
+}
 .author-cta h3,
 .blog-body .author-cta h3 {
   font-size: 1.15rem;
-  margin: 0 0 var(--space-2);
+  margin: 0;
+}
+.author-cta-header .eyebrow {
+  margin: 0 0 2px;
 }
 .author-cta p {
   margin: 0 0 var(--space-4);
@@ -621,8 +639,38 @@ ul, ol { margin: 0 0 var(--space-4); padding-left: 1.25rem; }
 .consulting-hero {
   padding: 96px 0 72px;
 }
+.consulting-hero-inner {
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+}
 .consulting-hero-copy {
-  max-width: 940px;
+  max-width: 720px;
+}
+.consulting-hero-portrait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 260px;
+  width: 100%;
+}
+.consulting-hero-portrait picture,
+.consulting-hero-portrait img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+}
+.portrait-caption {
+  margin-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  text-align: center;
 }
 .consulting-hero h1 {
   font-size: clamp(2.35rem, 6.4vw, 4.4rem);
@@ -769,8 +817,38 @@ ul, ol { margin: 0 0 var(--space-4); padding-left: 1.25rem; }
 .section.consulting-bridge {
   padding: 72px 0;
 }
+.consulting-bridge-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+.consulting-bridge-copy {
+  max-width: 680px;
+}
+.consulting-bridge-portrait {
+  flex-shrink: 0;
+  max-width: 170px;
+  width: 100%;
+  display: none;
+}
+.consulting-bridge-portrait picture,
+.consulting-bridge-portrait img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface-raised);
+}
 .consulting-bridge .hero-meta {
   margin-bottom: var(--space-6);
+}
+@media (min-width: 760px) {
+  .consulting-bridge-portrait {
+    display: block;
+  }
 }
 .section-intro:has(+ .offer-investment-note) {
   margin-bottom: var(--space-6);
@@ -996,6 +1074,10 @@ ul, ol { margin: 0 0 var(--space-4); padding-left: 1.25rem; }
   .nav-menu { display: none; }
   .section { padding: 120px 0; }
   .hero h1 { line-height: 1.02; }
+  .consulting-hero-inner {
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: var(--space-12);
+  }
   .metrics { grid-template-columns: repeat(4, 1fr); }
   .metrics li { border-bottom: 0; }
   .metrics li:nth-child(2n) { border-right: 1px solid var(--color-border); }
