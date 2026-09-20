@@ -718,6 +718,15 @@ svg{background-color:#000;width:100%;height:100%;vertical-align:top;background:0
   font-size: 1em;
 }
 
+.blog-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.15em;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: -0.2rem 0 0.8rem;
+  line-height: 1.45;
+}
+
 .blog-body {
   font-family: 'Inter', sans-serif;
   font-size: 1.1em;
@@ -730,6 +739,23 @@ svg{background-color:#000;width:100%;height:100%;vertical-align:top;background:0
   font-size: 1.45em;
   color: var(--text-primary);
   margin: 2.2rem 0 0.8rem;
+}
+
+.blog-body h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2em;
+  color: var(--text-primary);
+  margin: 1.8rem 0 0.6rem;
+}
+
+.blog-body blockquote {
+  margin: 1.4rem 0;
+  padding: 0.8rem 1.2rem;
+  border-left: 3px solid var(--accent-purple);
+  background: var(--bg-secondary);
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--text-secondary);
 }
 
 .blog-body p {
