@@ -36,7 +36,7 @@
     });
   }
 
-  // ponytail: clipboard → execCommand → mailto. Ceiling: no analytics on copy-fail.
+  // ponytail: clipboard → execCommand → mailto. Tracks high-intent copy event in Clarity.
   function fallbackCopy(text) {
     var ta = document.createElement("textarea");
     ta.value = text;
@@ -81,7 +81,48 @@
 
   document.querySelectorAll(".copy-email-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
+      if (window.clarity) {
+        window.clarity("event", "copy_email_clicked");
+      }
       copyEmail(btn.getAttribute("data-email") || "keshavbathla2017@gmail.com", btn);
     });
   });
+
+  // Track mailto CTAs in Clarity
+  document.querySelectorAll('a[href^="mailto:"]').forEach(function (link) {
+    link.addEventListener("click", function () {
+      if (window.clarity) {
+        window.clarity("event", "mailto_clicked");
+      }
+    });
+  });
+
+  // Tag incoming cold outreach leads via ?ref= or ?utm_content=
+  try {
+    if (window.location && window.location.search) {
+      var params = new URLSearchParams(window.location.search);
+      var ref = params.get("ref") || params.get("utm_content") || params.get("utm_campaign");
+      var src = params.get("utm_source");
+      if (ref && window.clarity) {
+        window.clarity("set", "lead_ref", ref);
+        window.clarity("identify", ref);
+      }
+      if (src && window.clarity) {
+        window.clarity("set", "utm_source", src);
+      }
+    }
+  } catch (e) {}
+
+  // 75% scroll depth event for reading consulting offers or articles
+  var scrollLogged = false;
+  window.addEventListener("scroll", function () {
+    if (scrollLogged) return;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (docHeight > 0 && (window.scrollY / docHeight) >= 0.75) {
+      scrollLogged = true;
+      if (window.clarity) {
+        window.clarity("event", "read_depth_75");
+      }
+    }
+  }, { passive: true });
 })();
