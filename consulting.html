@@ -111,7 +111,7 @@
       ]
     },
     {
-      "@type": "Service",
+      "@type": ["Service", "ProfessionalService"],
       "@id": "https://import-keshav.github.io/consulting.html#service",
       "name": "Production AI Systems Consulting",
       "serviceType": [
@@ -209,6 +209,12 @@
         {
           "@type": "Offer",
           "url": "https://import-keshav.github.io/consulting.html#ai-agent-sprint",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "minPrice": "15000",
+            "maxPrice": "30000",
+            "priceCurrency": "USD"
+          },
           "itemOffered": {
             "@type": "Service",
             "name": "Production AI Agent Sprint",
@@ -221,6 +227,12 @@
         {
           "@type": "Offer",
           "url": "https://import-keshav.github.io/consulting.html#enterprise-mcp",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "minPrice": "15000",
+            "maxPrice": "30000",
+            "priceCurrency": "USD"
+          },
           "itemOffered": {
             "@type": "Service",
             "name": "Enterprise MCP Implementation",
@@ -233,6 +245,12 @@
         {
           "@type": "Offer",
           "url": "https://import-keshav.github.io/consulting.html#rag-audit",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "minPrice": "15000",
+            "maxPrice": "30000",
+            "priceCurrency": "USD"
+          },
           "itemOffered": {
             "@type": "Service",
             "name": "RAG Pipeline and Eval Audit",
@@ -245,6 +263,12 @@
         {
           "@type": "Offer",
           "url": "https://import-keshav.github.io/consulting.html#systems-advisory",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "minPrice": "15000",
+            "maxPrice": "30000",
+            "priceCurrency": "USD"
+          },
           "itemOffered": {
             "@type": "Service",
             "name": "High-Scale Backend and Systems Advisory",
@@ -252,6 +276,60 @@
             "provider": {
               "@id": "https://import-keshav.github.io/#person"
             }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://import-keshav.github.io/consulting.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "When is this consulting engagement a good fit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When the workflow has clear business value and an accountable owner, your team can provide access to technical stakeholders and representative data, reliability, security, or scale matters beyond a prototype, and you want candid architecture decisions with a maintainable handoff."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When should I choose a different route instead?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If you only need a generic chatbot or prompt wrapper, there is no identified workflow, user, or success condition, the engagement depends on unbounded availability or undefined scope, or you need a large outsourced delivery team rather than senior specialist involvement, this consulting offer is not the right fit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a mutual NDA available before reviewing our codebase?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. A standard mutual NDA is executed before reviewing internal codebases, workflows, or proprietary data. Engagement-specific source code, agent configurations, eval datasets, and runbooks belong to your company after payment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What timezones and working hours are supported?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Full IST business-day overlap is available for Indian teams. For US (EST/PST), Europe (CET), Middle East (UAE/KSA), and APAC teams, a minimum two-hour live overlap window is agreed before kickoff. WhatsApp and Indian mobile numbers are welcome."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much do engagements typically cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most fixed-scope engagements range between US$15,000 and $30,000, depending on scope and duration. Indian entities are invoiced in INR plus applicable GST; international engagements are invoiced in USD."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who owns the code and intellectual property after the engagement?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "100% of engagement-specific source code, agent configurations, eval datasets, and runbooks belong to your company after payment. Pre-existing tools and open-source dependencies stay excluded."
           }
         }
       ]
@@ -268,7 +346,7 @@
     <nav class="nav-desktop" aria-label="Primary">
       <a href="consulting.html" aria-current="page">Consulting</a>
       <a href="index.html#work">Work</a>
-      <a href="blogs/index.html">Writing</a>
+      <a href="blogs/">Writing</a>
       <a href="index.html#experience">Experience</a>
       <a href="#contact">Contact</a>
       <a class="nav-resume" href="#contact">Discuss a Project</a>
@@ -281,7 +359,7 @@
         <div class="nav-panel">
           <a href="consulting.html" aria-current="page">Consulting</a>
           <a href="index.html#work">Work</a>
-          <a href="blogs/index.html">Writing</a>
+          <a href="blogs/">Writing</a>
           <a href="index.html#experience">Experience</a>
           <a href="#contact">Contact</a>
           <a class="nav-resume" href="#contact">Discuss a Project</a>
