@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){const t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();</script>
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "ytz2ba3l73");
+</script>
+<link rel="canonical" href="https://import-keshav.github.io/blogs/how-prompt-caching-works.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../static_files/style.css">
+<title>The Stateless Snowball: Why Prompt Caching Powers AI Coding Agents | Keshav Bathla</title>
+<meta name="description" content="Why LLMs are stateless, how prompt caching serves as Redis for GPUs, prefix matching rules, and the prompt architecture pattern that cuts AI bills by 90%.">
+<meta name="author" content="Keshav Bathla">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0b0d10">
+<meta property="og:title" content="The Stateless Snowball: Why Prompt Caching Powers AI Coding Agents | Keshav Bathla">
+<meta property="og:description" content="Why LLMs are stateless, how prompt caching serves as Redis for GPUs, prefix matching rules, and the prompt architecture pattern that cuts AI bills by 90%.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://import-keshav.github.io/blogs/how-prompt-caching-works.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://import-keshav.github.io/static_files/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:alt" content="Keshav Bathla explaining prompt caching and AI agent system architecture">
+<meta property="og:site_name" content="Keshav Bathla">
+<meta property="article:published_time" content="2026-10-12">
+<meta property="article:modified_time" content="2026-10-12">
+<meta property="article:author" content="Keshav Bathla">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Stateless Snowball: Why Prompt Caching Powers AI Coding Agents | Keshav Bathla">
+<meta name="twitter:description" content="Why LLMs are stateless, how prompt caching serves as Redis for GPUs, prefix matching rules, and the prompt architecture pattern that cuts AI bills by 90%.">
+<meta name="twitter:image" content="https://import-keshav.github.io/static_files/og-default.jpg">
+<meta name="twitter:image:alt" content="Keshav Bathla explaining prompt caching and AI agent system architecture">
+<meta name="twitter:creator" content="@import_keshav">
+<meta name="twitter:site" content="@import_keshav">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%237c9cff'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-weight='700' font-size='18' fill='%230b0d10'%3EK%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://import-keshav.github.io/#website",
+      "url": "https://import-keshav.github.io/",
+      "name": "Keshav Bathla",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://import-keshav.github.io/#person"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://import-keshav.github.io/#person",
+      "name": "Keshav Bathla",
+      "url": "https://import-keshav.github.io/",
+      "image": "https://import-keshav.github.io/static_files/keshav-bathla.jpg"
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://import-keshav.github.io/blogs/how-prompt-caching-works.html#article",
+      "url": "https://import-keshav.github.io/blogs/how-prompt-caching-works.html",
+      "headline": "The Stateless Snowball: Why Prompt Caching is the Unsung Hero of AI Coding Agents",
+      "alternativeHeadline": "Why Prompt Caching is the Redis of Modern AI, how prefix matching works, and the simple prompt architecture trick that saves 90% of your bill",
+      "description": "Why LLMs are stateless, how prompt caching serves as Redis for GPUs, prefix matching rules, and the prompt architecture pattern that cuts AI bills by 90%.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://import-keshav.github.io/static_files/og-default.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "datePublished": "2026-10-12",
+      "dateModified": "2026-10-12",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://import-keshav.github.io/#person"
+      },
+      "publisher": {
+        "@id": "https://import-keshav.github.io/#person"
+      },
+      "isPartOf": {
+        "@id": "https://import-keshav.github.io/#website"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://import-keshav.github.io/blogs/how-prompt-caching-works.html"
+      },
+      "breadcrumb": {
+        "@id": "https://import-keshav.github.io/blogs/how-prompt-caching-works.html#breadcrumb"
+      },
+      "keywords": ["Prompt Caching", "AI coding agents", "Claude Code", "Cursor", "LLM architecture", "Time To First Token", "KV cache", "prefix matching", "token economics"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://import-keshav.github.io/blogs/how-prompt-caching-works.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://import-keshav.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Writing",
+          "item": "https://import-keshav.github.io/blogs/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "The Stateless Snowball: Why Prompt Caching Powers AI Coding Agents",
+          "item": "https://import-keshav.github.io/blogs/how-prompt-caching-works.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="wordmark" href="../index.html">Keshav Bathla</a>
+    <nav class="nav-desktop" aria-label="Primary">
+      <a href="../consulting.html">Consulting</a>
+      <a href="../index.html#work">Work</a>
+      <a href="index.html" aria-current="page">Writing</a>
+      <a href="../index.html#experience">Experience</a>
+      <a href="../index.html#contact">Contact</a>
+      <a class="nav-resume" href="../consulting.html#contact">Discuss a Project</a>
+    </nav>
+    <div class="header-actions">
+      <details class="nav-menu" id="navMenu">
+        <summary class="menu-summary" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </summary>
+        <div class="nav-panel">
+          <a href="../consulting.html">Consulting</a>
+          <a href="../index.html#work">Work</a>
+          <a href="index.html" aria-current="page">Writing</a>
+          <a href="../index.html#experience">Experience</a>
+          <a href="../index.html#contact">Contact</a>
+          <a class="nav-resume" href="../consulting.html#contact">Discuss a Project</a>
+          <a href="../static_files/keshav-bathla-resume.pdf">Download Résumé</a>
+        </div>
+      </details>
+      <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Switch to light theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M5 12H3M21 12h-2M6.2 6.2 4.8 4.8M19.2 19.2l-1.4-1.4M6.2 17.8 4.8 19.2M19.2 4.8l-1.4 1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4 7 7 0 0 0 20 14.5z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<article class="wrap blog-page">
+  <p class="crumb"><a href="index.html">Writing</a> / The Stateless Snowball: Why Prompt Caching Powers AI Coding Agents</p>
+  <header class="blog-header">
+    <p class="eyebrow">AI systems architecture</p>
+    <h1>The Stateless Snowball: Why Prompt Caching is the Unsung Hero of AI Coding Agents</h1>
+    <p class="blog-subtitle">Why Anthropic, OpenAI, and Cursor rely on prompt caching as the Redis of modern AI, how prefix matching works, and the simple prompt architecture trick that saves 90% of your bill.</p>
+    <p class="blog-meta">12 October, 2026 · ~8 min read</p>
+  </header>
+  <div class="blog-body">
+    <p>
+      Imagine you're having an intense debugging session with an AI coding assistant like Claude Code, Cursor, or Copilot.
+    </p>
+    <p>
+      You’ve been at it for 25 turns. The AI knows your repository structure, your custom test runner, the messy bug in <code>auth_controller.ts</code>, and the three failed attempts you made ten minutes ago to fix it. When you type:
+    </p>
+    <blockquote>
+      <em>"Cool, now write a unit test for that edge case,"</em>
+    </blockquote>
+    <p>
+      ...it immediately spits out a flawless test using your project’s exact mocking conventions.
+    </p>
+    <p>
+      It feels like you’re pairing with a sharp senior engineer who has been sitting beside you all morning, soaking in context.
+    </p>
+    <p>
+      <strong>Except that’s not what’s happening at all.</strong>
+    </p>
+    <p>
+      Behind that slick terminal or editor UI, the AI didn't "remember" a single thing. Large Language Models (LLMs) have no persistent memory. They don't have a background process quietly holding state. They are as stateless as a plain HTTP <code>GET</code> request.
+    </p>
+    <p>
+      To give you the illusion of memory, the agent harness on your machine packed up <strong>the entire conversation from the beginning</strong>—every prompt, every assistant reply, every 1,500-line file you inspected, and every terminal error trace—and fired that gargantuan payload across the internet to the model.
+    </p>
+    <p>
+      Welcome to <strong>The Stateless Snowball</strong>.
+    </p>
+    <p>
+      Without a breakthrough optimization, this snowball would make AI coding agents impossibly slow and outrageously expensive. That optimization is <strong>Prompt Caching</strong>—the unsung hero of the modern AI stack.
+    </p>
+    <p>
+      Grab a fresh cup of coffee. Let’s treat the LLM like a backend service, pop open the hood, and see how prompt caching actually works.
+    </p>
+
+    <h2>1. The "Stateless Snowball": The Problem Nobody Talks About</h2>
+    <p>
+      If you’re a backend engineer, you already know the golden rule of REST: <strong>the server maintains no client state between requests</strong>. Every HTTP request must contain all the context the server needs to fulfill it.
+    </p>
+    <p>
+      LLMs work the exact same way. When you call an LLM API (like Anthropic’s <code>/v1/messages</code> or OpenAI’s <code>/v1/chat/completions</code>), you aren't sending a quick message saying <em>"Hey, remember what I said earlier?"</em> You are sending an array of messages representing the entire universe of that conversation:
+    </p>
+
+<pre><code class="language-json">POST /v1/messages
+{
+  "system": "You are an expert TypeScript coding assistant...",
+  "tools": [ { "name": "read_file", ... }, { "name": "run_terminal", ... } ],
+  "messages": [
+    { "role": "user", "content": "Turn 1: Find the bug in auth..." },
+    { "role": "assistant", "content": "Turn 2: Let me inspect auth_controller.ts" },
+    { "role": "user", "content": "Turn 3: [File contents of auth_controller.ts (1,500 lines)]" },
+    { "role": "assistant", "content": "Turn 4: I see the issue on line 42..." },
+    ...
+    { "role": "user", "content": "Turn 30: Now write a unit test for that." }
+  ]
+}</code></pre>
+
+    <p>
+      Now, trace what happens to the size of that payload as a coding session progresses.
+    </p>
+
+    <h3>The Anatomy of Context Bloat</h3>
+    <p>Let's walk through a realistic coding agent session:</p>
+    <ul>
+      <li><strong>Turn 1:</strong> You ask: <em>"Why is login failing on staging?"</em> Payload size: ~2,500 tokens (~10 KB, including system prompts and tool schemas). Fast and cheap.</li>
+      <li><strong>Turn 2:</strong> The agent invokes a tool: <code>read_file("src/controllers/auth_controller.ts")</code>.</li>
+      <li><strong>Turn 3:</strong> The harness returns the file. It’s a 1,500-line enterprise controller (~15,000 tokens).</li>
+      <li><strong>Turn 4:</strong> The agent spots a database query and runs <code>read_file("src/models/user.ts")</code> (~5,000 tokens).</li>
+      <li><strong>Turn 5:</strong> The agent edits a file and runs the test suite: <code>run_terminal("npm test")</code>. The test fails with a massive 200-line stack trace (~3,000 tokens).</li>
+    </ul>
+
+    <div class="callout-box">
+      <h4>The Catch Most Developers Miss</h4>
+      <p>
+        <strong>That 1,500-line controller file from Turn 3 doesn't just cost tokens on Turn 3.</strong>
+      </p>
+      <p>
+        Because the model is completely stateless, that file must be re-sent on <strong>Turn 4, Turn 5, Turn 10, Turn 20, and Turn 30</strong>! Every tool output, every file dump, and every error log gets permanently baked into the payload history. The payload turns into an avalanche.
+      </p>
+    </div>
+
+    <figure class="mermaid-figure">
+      <div class="mermaid-diagram" id="mermaid-1"></div>
+      <figcaption>The Stateless Snowball: every single turn re-sends the cumulative history of all previous files and outputs.</figcaption>
+    </figure>
+
+    <p>
+      By Turn 20, a single prompt like <em>"Looks good, commit it"</em> isn’t sending a 5-word sentence. It is dragging a <strong>150,000-token payload (~600 KB of raw code and text)</strong> along with it.
+    </p>
+
+    <h2>2. The Financial and Latency Disaster</h2>
+    <p>
+      If you run an AI coding agent without prompt caching, two catastrophic bottlenecks occur:
+    </p>
+
+    <h3>1. The Latency Wall (Time-To-First-Token)</h3>
+    <p>
+      When a GPU receives an input prompt, it has to "read" and process all the input tokens before it can generate the very first word of its response. This is known as <strong>Time-To-First-Token (TTFT)</strong>.
+    </p>
+    <p>
+      Processing tokens through deep transformer layers requires massive matrix multiplications. For a 150,000-token payload, an uncached model can spend <strong>8 to 15 seconds</strong> just crunching input tokens before it outputs a single character.
+    </p>
+    <p>
+      Waiting 15 seconds after every message completely shatters the interactive pairing flow.
+    </p>
+
+    <h3>2. The Quadratic Cost Curve</h3>
+    <p>
+      Let's look at the numbers using standard enterprise pricing (~$3.00 per 1M input tokens for flagship frontier models like Claude 3.5 Sonnet):
+    </p>
+
+    <div class="blog-table-wrap">
+      <table class="blog-table">
+        <thead>
+          <tr>
+            <th>Turn</th>
+            <th>Input Tokens in Payload</th>
+            <th>Uncached Cost (Turn)</th>
+            <th>Cumulative Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Turn 1</strong></td>
+            <td>3,000</td>
+            <td>$0.009</td>
+            <td>$0.009</td>
+          </tr>
+          <tr>
+            <td><strong>Turn 5</strong></td>
+            <td>25,000</td>
+            <td>$0.075</td>
+            <td>$0.21</td>
+          </tr>
+          <tr>
+            <td><strong>Turn 10</strong></td>
+            <td>70,000</td>
+            <td>$0.210</td>
+            <td>$0.95</td>
+          </tr>
+          <tr>
+            <td><strong>Turn 15</strong></td>
+            <td>110,000</td>
+            <td>$0.330</td>
+            <td>$2.35</td>
+          </tr>
+          <tr>
+            <td><strong>Turn 20</strong></td>
+            <td>150,000</td>
+            <td>$0.450</td>
+            <td>$4.30</td>
+          </tr>
+          <tr>
+            <td><strong>Turn 25</strong></td>
+            <td>180,000</td>
+            <td>$0.540</td>
+            <td>$6.80</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      Notice how the cost escalates? You aren't paying for what you just typed; you are paying rent on everything you’ve typed and read since the session started.
+    </p>
+    <p>
+      A single 25-turn refactoring task would cost <strong>nearly $7.00</strong>. If an engineer runs 15 such tasks a day, the team’s monthly bill exceeds <strong>$3,000 per developer</strong>.
+    </p>
+    <p>Something had to give.</p>
+
+    <h2>3. Enter Prompt Caching: The Redis of the AI World</h2>
+    <p>
+      In traditional web architectures, what do you do when an expensive SQL query is executed repeatedly with identical parameters?
+    </p>
+    <p>
+      You put <strong>Redis</strong> or <strong>Memcached</strong> in front of it. You compute the expensive result once, stash it in high-speed RAM, and serve subsequent requests in 2 milliseconds.
+    </p>
+    <p>
+      <strong>Prompt Caching is Redis for LLMs.</strong>
+    </p>
+
+    <h3>What Actually Happens During a Cache Hit?</h3>
+    <p>
+      When an LLM processes your text, it converts raw words into numeric vectors and computes intermediate key-value states (the <em>KV cache</em>) across all its attention layers. This initial computation—called the <strong>prefill phase</strong>—is where 90% of the GPU compute and time is burned.
+    </p>
+    <p>
+      Normally, once the API finishes generating its reply, the GPU wipes those intermediate states from memory to free up space for the next customer's request.
+    </p>
+    <p>
+      With Prompt Caching, cloud inference engines do something brilliant: <strong>they don't throw those computed states away</strong>. They store the precomputed states directly in ultra-fast GPU memory (HBM - High Bandwidth Memory).
+    </p>
+    <p>
+      When your next turn arrives, the inference router inspects the incoming token sequence:
+    </p>
+    <ol>
+      <li><em>"Have I already processed tokens 1 through 148,000 in this exact order?"</em></li>
+      <li><strong>Yes! (Cache Hit 🎉)</strong></li>
+      <li>The GPU loads the precomputed KV tensors instantly from memory.</li>
+      <li>The model only computes the prefill for the <strong>2,000 new tokens</strong> you just added!</li>
+    </ol>
+
+    <figure class="mermaid-figure">
+      <div class="mermaid-diagram" id="mermaid-2"></div>
+      <figcaption>Cold Compute vs Cached Prefix Hit: bypassing 90%+ of the compute phase.</figcaption>
+    </figure>
+
+    <h3>The Impact on Cost and Speed</h3>
+    <ul>
+      <li><strong>Price:</strong> Providers (Anthropic, OpenAI, DeepSeek) offer a <strong>90% discount</strong> on cached input tokens. Instead of $3.00 per million tokens, cached tokens cost just <strong>$0.30 per million</strong>.</li>
+      <li><strong>Latency:</strong> TTFT drops from <strong>10+ seconds down to under 1 second</strong>.</li>
+    </ul>
+    <p>
+      That 25-turn refactoring session that used to cost $6.80 now costs roughly <strong>$0.85</strong>, and the AI responds almost instantly on turn 25.
+    </p>
+
+    <h2>4. The "Prefix Match" Rule: The Barista Analogy</h2>
+    <p>
+      Here is where software engineering principles come in. You can't just toss random data at an LLM and expect the cache to work. Prompt caches are <strong>strictly prefix-based</strong>.
+    </p>
+    <p>To understand why, think of your local barista:</p>
+    <ul>
+      <li>
+        <strong>Day 1:</strong> You order: <em>"I want an oat milk latte, extra shot, 1 pump vanilla, cinnamon on top."</em> The barista writes out the ticket, pulls the shot, steams the oat milk, and prepares your drink.
+      </li>
+      <li>
+        <strong>Day 2:</strong> You walk up and say: <em>"Give me the exact same latte as yesterday, plus a blueberry muffin."</em> The barista immediately pulls yesterday's saved recipe ticket. They don't need you to explain what oat milk is or how many pumps of vanilla to add. They only have to grab the muffin. That’s a <strong>prefix hit</strong>.
+      </li>
+      <li>
+        <strong>Day 3:</strong> You walk up and say: <em>"Actually, today make it an almond milk latte, extra shot, 1 pump vanilla, cinnamon on top, plus a blueberry muffin."</em>
+      </li>
+    </ul>
+    <p>
+      Because you changed the very first ingredient (<em>almond milk instead of oat milk</em>), the entire saved recipe ticket is invalid! The barista has to recalculate and measure everything from scratch.
+    </p>
+
+    <div class="callout-box">
+      <h4>The Zipper Principle</h4>
+      <p>
+        The GPU matches tokens starting strictly from <strong>index 0 forward</strong>. The moment it encounters a single token that differs from what’s in the cache, <strong>the cache breaks</strong>. Everything from that point forward must be recalculated from scratch.
+      </p>
+    </div>
+
+<pre><code>Token Index:    [ 0 ] [ 1 ] [ 2 ] [ 3 ] ... [ 99,999 ] [ 100,000 ]
+Cached Stream:  [ S ] [ Y ] [ S ] [ T ] ... [  R  ]   [   U   ]
+Incoming Stream:[ S ] [ Y ] [ S ] [ T ] ... [  R  ]   [   X   ]  &lt;-- Diverges!
+                 |===== CACHE HIT (Free &amp; Fast) =====| |== Compute ==|</code></pre>
+
+    <h2>5. Why Code Structure Matters (The Million-Dollar Architecture Secret)</h2>
+    <p>
+      Once you understand the prefix rule, you realize something profound:
+    </p>
+    <blockquote>
+      <strong>How you order the content inside your prompt determines whether your AI application is economically viable or financially suicidal.</strong>
+    </blockquote>
+
+    <h3>🌟 The Golden Rule: Static Stuff at the TOP, Dynamic Stuff at the BOTTOM</h3>
+    <p>
+      Take a look at how a production-grade agent payload is constructed:
+    </p>
+
+<pre><code>┌────────────────────────────────────────────────────────┐
+│ 1. Core System Prompt (Persona, safety, formatting)    │ &lt;-- STABLE (100% Cache Hit)
+├────────────────────────────────────────────────────────┤
+│ 2. Tool Definitions (JSON schemas for bash, read, etc) │ &lt;-- STABLE (100% Cache Hit)
+├────────────────────────────────────────────────────────┤
+│ 3. Project Guidelines (CLAUDE.md / .cursorrules)       │ &lt;-- STABLE (100% Cache Hit)
+├────────────────────────────────────────────────────────┤
+│ 4. Conversation History (Turns 1 through N-1)          │ &lt;-- APPEND-ONLY (Hits cache!)
+├────────────────────────────────────────────────────────┤
+│ 5. Fresh Turn &amp; Latest Tool Output                     │ &lt;-- DYNAMIC (The only compute!)
+└────────────────────────────────────────────────────────┘</code></pre>
+
+    <p>
+      Because the top sections never change, tokens 0 through 50,000 remain an identical prefix on every single request. And because conversation history is <strong>append-only</strong>, Turn 1 through Turn 15 also form a stable prefix for Turn 16!
+    </p>
+
+    <h3>The Rookie Mistake: The Cache Invalidation Trap</h3>
+    <p>
+      Here is a real bug that cost one startup thousands of dollars in LLM API bills in a single week.
+    </p>
+    <p>
+      A junior engineer decided to be helpful and added the current timestamp to the system prompt so the AI would know what time it was:
+    </p>
+
+<pre><code class="language-typescript">// ❌ THE CACHE DESTROYER
+const systemPrompt = `You are a helpful coding assistant.
+The current server time is: ${new Date().toISOString()}
+Here are your rules...`;</code></pre>
+
+    <p>
+      <code>new Date().toISOString()</code> changes on every turn:
+    </p>
+    <ul>
+      <li>Turn 1: <code>2026-10-08T04:24:18.102Z</code></li>
+      <li>Turn 2: <code>2026-10-08T04:24:32.481Z</code></li>
+    </ul>
+    <p>
+      Because the timestamp was placed on line 2 (around token #15), <strong>every single turn alters token #15</strong>. The prefix match fails after 14 tokens! The entire 150,000-token conversation history following it missed the cache every single turn.
+    </p>
+
+    <h4>The Cache-Friendly Architecture:</h4>
+    <p>
+      If the model needs dynamic runtime context like timestamps, inject it at the leaf (the latest user message or tool response):
+    </p>
+
+<pre><code class="language-typescript">// ✅ CACHE-FRIENDLY ARCHITECTURE
+const systemPrompt = `You are a helpful coding assistant.
+Here are your rules...`; // Never changes! (100% Cache Hit)
+
+const userTurn = `[Context: timestamp=2026-10-08T04:24:32Z]
+Please refactor this function.`; // Put dynamic data at the very bottom!</code></pre>
+
+    <h2>6. The 5-Minute Cache Cliff (Cache Eviction)</h2>
+    <p>
+      In backend engineering, Redis keys have a <strong>TTL (Time To Live)</strong> so memory doesn't leak.
+    </p>
+    <p>
+      In the AI world, GPU High Bandwidth Memory (HBM3e) is the most expensive, supply-constrained hardware on earth. Cloud providers cannot let your 150,000 tokens sit on an NVIDIA H100 GPU indefinitely while you step away.
+    </p>
+
+    <h3>The 5-Minute Window</h3>
+    <p>
+      Most major providers maintain prompt caches with an ephemeral idle timeout of roughly <strong>5 minutes</strong>:
+    </p>
+
+    <figure class="mermaid-figure">
+      <div class="mermaid-diagram" id="mermaid-3"></div>
+      <figcaption>The 5-minute cache cliff: active sessions stay warm, while idle pauses trigger cold starts.</figcaption>
+    </figure>
+
+    <ul>
+      <li><strong>If you stay in the flow:</strong> You ask a question, test the code, reply 45 seconds later. Every request lands well within the 5-minute window. You enjoy 100% cache hits, sub-second latency, and 90% cost savings.</li>
+      <li><strong>If you get distracted:</strong> You go grab coffee, join a 15-minute standup, or read docs for 6 minutes. The cache expires.</li>
+      <li><strong>The next turn:</strong> Your next message suffers a <strong>Cache Miss</strong>. The GPU must re-read all 150,000 tokens from line 1. It takes 10 seconds and costs full price. Once re-computed, the 5-minute timer starts ticking again.</li>
+    </ul>
+
+    <h3>How Modern Agent Systems Hack the Cliff</h3>
+    <ol>
+      <li><strong>Background Heartbeats / Warm Pings:</strong> Advanced tools send tiny background keep-alive probes right around the 4-minute mark if a long tool execution is running, ensuring the cache stays warm.</li>
+      <li><strong>Context Compaction on Eviction:</strong> If a tool knows the cache is cold anyway after a long idle period, that is the ideal moment to summarize and prune old conversation history before re-filling the cache.</li>
+    </ol>
+
+    <aside class="author-cta" aria-labelledby="prompt-caching-consulting-cta">
+      <div class="author-cta-header">
+        <picture>
+          <source srcset="../static_files/keshav-bathla.webp" type="image/webp">
+          <img class="author-avatar" src="../static_files/keshav-bathla.jpg" alt="Keshav Bathla" width="52" height="52" loading="lazy">
+        </picture>
+        <div>
+          <p class="eyebrow">Production AI consulting</p>
+          <h3 id="prompt-caching-consulting-cta">Optimizing token economics &amp; agent latency?</h3>
+        </div>
+      </div>
+      <p>
+        I help engineering teams design high-performance AI agents, cache-friendly prompt architectures, Model Context Protocol (MCP) integrations, and LLM cost-reduction pipelines.
+      </p>
+      <p class="author-cta-links">
+        <a href="../consulting.html#ai-agent-sprint">Review the Production AI Agent Sprint</a>
+        · <a href="mailto:keshavbathla2017@gmail.com?subject=Consulting%20Inquiry%3A%20Prompt%20Caching%20%26%20Agent%20Architecture&amp;body=Company%20%2F%20Website%3A%0ATime%20zone%20%2F%20City%3A%0AWhat%20are%20you%20building%20%26%20target%20outcome%3A%0ATarget%20timing%3A%0AApproximate%20budget%3A">
+          Discuss your AI architecture
+        </a>
+      </p>
+    </aside>
+
+    <h2>Related reading</h2>
+    <ul>
+      <li><a href="how-claude-md-works.html">Opening the Black Box: How CLAUDE.md Really Works</a> — why rules belong in user context, not system prompt</li>
+      <li><a href="how-cursor-router-works.html">How Cursor Router picks the right model</a> — complexity scoring, model taxonomy, and LLM routing</li>
+      <li><a href="chinese-ai-models-vs-us.html">Cheap intelligence, expensive trust</a> — when to use DeepSeek/GLM/Kimi vs Claude/OpenAI</li>
+      <li><a href="coding-is-dying-what-comes-next.html">Coding is dying. What comes next?</a> — wealth playbook and career shift for software engineers</li>
+      <li><a href="../consulting.html">AI Systems Consulting</a> — production agent sprints and systems advisory</li>
+    </ul>
+  </div>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>© 2026 Keshav Bathla · AI systems consulting worldwide</p>
+    <nav class="footer-links" aria-label="Social">
+      <a href="mailto:keshavbathla2017@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/keshav-bathla-b517a2152/" rel="me noopener">LinkedIn</a>
+      <a href="https://github.com/import-keshav" rel="me noopener">GitHub</a>
+      <a href="https://keshav-harness.github.io/" rel="noopener">Training log</a>
+      <a href="https://x.com/import_keshav" rel="me noopener">X</a>
+    </nav>
+  </div>
+</footer>
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+  const diagrams = {
+    'mermaid-1': `sequenceDiagram
+    autonumber
+    participant IDE as Your Local Agent (Harness)
+    participant API as LLM Cloud API (Stateless GPU)
+
+    Note over IDE,API: Turn 1: Fresh Session
+    IDE->>API: Prompt + System Rules (~2.5 KB)
+    API-->>IDE: "Let me inspect auth_controller.ts"
+
+    Note over IDE,API: Turn 3: Reading a 1,500-line File
+    IDE->>API: Turns 1-2 + File Content (~60 KB)
+    API-->>IDE: "I see the issue. Let me check user model."
+
+    Note over IDE,API: Turn 10: Multiple Files + Test Errors
+    IDE->>API: Turns 1-9 + Previous Files + Stack Traces (~250 KB)
+    API-->>IDE: "Editing code now..."
+
+    Note over IDE,API: Turn 20: The Giant Snowball
+    IDE->>API: Turns 1-19 + Everything Re-sent (~600 KB / 150k Tokens)
+    API-->>IDE: "Here is your unit test."`,
+
+    'mermaid-2': `flowchart TD
+    subgraph UNCACHED ["❌ Uncached Request (Cold Compute)"]
+        direction TB
+        U1["Token 0: System Prompt"] --> U2["Token 5,000: Tool Schemas"]
+        U2 --> U3["Token 20,000: Project Rules"]
+        U3 --> U4["Token 80,000: File Reads & History"]
+        U4 --> U5["Token 100,000: New User Message"]
+    end
+
+    subgraph CACHED ["✅ Cached Request (Prefix Hit)"]
+        direction TB
+        C1["Tokens 0 to 98,000: Exact Prefix Match<br>(Loaded directly from GPU Memory)"]
+        C2["Tokens 98,001 to 100,000: Fresh Tokens<br>(Only compute this tiny delta!)"]
+        C1 -.->|Zero Compute Latency / 90% Cost Cut| C2
+    end`,
+
+    'mermaid-3': `flowchart LR
+    T1["⏱️ 00:00<br>Turn 1: Cache Written to GPU"] -->|45s later| T2["🎯 00:45<br>Turn 2: CACHE HIT (TTL resets)"]
+    T2 -->|1m 25s later| T3["🎯 02:10<br>Turn 3: CACHE HIT (TTL resets)"]
+    T3 -->|5+ mins idle break| E["❄️ 07:30<br>5-Min Window Expires (Evicted)"]
+    E -->|Next prompt sent| T4["💥 08:00<br>Turn 4: CACHE MISS (Cold Start)"]`
+  };
+
+  let renderSeq = 0;
+
+  async function renderAll() {
+    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: isDark ? 'dark' : 'default',
+      themeVariables: isDark ? {
+        darkMode: true,
+        background: '#11151a',
+        primaryColor: '#171c22',
+        primaryTextColor: '#f5f7fa',
+        primaryBorderColor: '#3a4552',
+        lineColor: '#7c9cff',
+        secondaryColor: '#171c22',
+        tertiaryColor: '#0b0d10',
+        actorBkg: '#171c22',
+        actorBorder: '#7c9cff',
+        actorTextColor: '#f5f7fa',
+        actorLineColor: '#7c9cff',
+        signalColor: '#f5f7fa',
+        signalTextColor: '#f5f7fa',
+        labelBoxBkgColor: '#171c22',
+        labelBoxBorderColor: '#3a4552',
+        labelTextColor: '#f5f7fa',
+        loopTextColor: '#f5f7fa',
+        noteBorderColor: '#7c9cff',
+        noteBkgColor: '#171c22',
+        noteTextColor: '#f5f7fa'
+      } : {
+        darkMode: false,
+        background: '#ffffff',
+        primaryColor: '#f1f3f6',
+        primaryTextColor: '#15181d',
+        primaryBorderColor: '#b8c0ca',
+        lineColor: '#315fd6',
+        secondaryColor: '#f7f8fa',
+        tertiaryColor: '#ffffff',
+        actorBkg: '#f1f3f6',
+        actorBorder: '#315fd6',
+        actorTextColor: '#15181d',
+        actorLineColor: '#315fd6',
+        signalColor: '#15181d',
+        signalTextColor: '#15181d',
+        labelBoxBkgColor: '#f1f3f6',
+        labelBoxBorderColor: '#b8c0ca',
+        labelTextColor: '#15181d',
+        loopTextColor: '#15181d',
+        noteBorderColor: '#315fd6',
+        noteBkgColor: '#f1f3f6',
+        noteTextColor: '#15181d'
+      },
+      fontFamily: 'Inter, system-ui, -apple-system, sans-serif'
+    });
+
+    renderSeq++;
+    for (const [id, code] of Object.entries(diagrams)) {
+      const container = document.getElementById(id);
+      if (!container) continue;
+      try {
+        const uniqueId = id + '-svg-' + renderSeq;
+        const { svg } = await mermaid.render(uniqueId, code);
+        container.innerHTML = svg;
+      } catch (err) {
+        console.error('Failed to render ' + id, err);
+      }
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderAll);
+  } else {
+    renderAll();
+  }
+
+  document.querySelectorAll('.theme-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      setTimeout(renderAll, 60);
+    });
+  });
+</script>
+<script src="../static_files/portfolio.js"></script>
+</body>
+</html>
